@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#include "utility/SerialDev.hpp"
+#include "SerialDev.hpp"
 
 class InoHardwareSerial : public SerialDev
 {

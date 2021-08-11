@@ -2,6 +2,7 @@
 #define SERIAL_BRIDGE_H_
 
 #include "utility/CobsSerial.hpp"
+#include "SerialDev.hpp"
 #include "Message.hpp"
 
 class SerialBridge
@@ -9,7 +10,11 @@ class SerialBridge
 public:
     typedef uint8_t frame_id;
 
-    SerialBridge(CobsSerial *dev);
+    SerialBridge(SerialDev *dev);
+
+    ~SerialBridge(){
+        delete _dev;
+    }
 
     void add_frame(frame_id id, sb::_Message *str);
     int read();

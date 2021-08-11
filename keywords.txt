@@ -9,6 +9,7 @@
 SerialBridge	KEYWORD1
 sb	            KEYWORD1
 Message	        KEYWORD1
+SerialDev       KEYWORD1
 
 InoHardwareSerial   KEYWORD1
 

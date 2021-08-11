@@ -1,8 +1,8 @@
 #include "SerialBridge.hpp"
 
-SerialBridge::SerialBridge(CobsSerial *dev)
+SerialBridge::SerialBridge(SerialDev *dev)
 {
-    _dev = dev;
+    _dev = new CobsSerial(dev);
     _max_data_size = 0;
 }
 

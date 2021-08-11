@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "utility/SerialDev.hpp"
+#include "SerialDev.hpp"
 
 extern "C"
 {
