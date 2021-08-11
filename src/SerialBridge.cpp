@@ -42,3 +42,8 @@ void SerialBridge::write(SerialBridge::frame_id id, sb::_Message *str)
     str->packing(id);
     _dev->write(str->ptr(), str->size());
 }
+
+void SerialBridge::update()
+{
+    _dev->update();
+}

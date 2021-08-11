@@ -20,6 +20,8 @@ public:
     int read();
     void write(frame_id id, sb::_Message *str);
 
+    void update();
+
 protected:
     enum
     {
