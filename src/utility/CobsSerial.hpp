@@ -5,7 +5,7 @@
 
 #include <queue>
 
-#include "SerialDev.hpp"
+#include "../SerialDev.hpp"
 #include "cobs/cobs.h"
 
 #define COBS_TX_BUFFER_SIZE 32
