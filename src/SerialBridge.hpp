@@ -1,9 +1,9 @@
-#ifndef SERIAL_BRIDGE_H_
-#define SERIAL_BRIDGE_H_
+#ifndef _SERIAL_BRIDGE_HPP_
+#define _SERIAL_BRIDGE_HPP_
 
 #include "CobsSerial.hpp"
-#include "SerialDev.hpp"
 #include "Message.hpp"
+#include "SerialDev.hpp"
 
 class SerialBridge
 {
@@ -35,4 +35,4 @@ private:
     CobsSerial *_dev;
 };
 
-#endif
+#endif //#ifndef _SERIAL_BRIDGE_HPP_

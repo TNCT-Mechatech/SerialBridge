@@ -1,5 +1,5 @@
-#ifndef _LINUX_HARDWARE_SERIAL_H_
-#define _LINUX_HARDWARE_SERIAL_H_
+#ifndef _LINUX_HARDWARE_SERIAL_HPP_
+#define _LINUX_HARDWARE_SERIAL_HPP_
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -31,8 +31,8 @@ public:
 
     virtual int write(unsigned char *data, unsigned int len);
 
-    private:
-        int _fd;
+private:
+    int _fd;
 };
 
-#endif //#ifndef _LINUX_HARDWARE_SERIAL_H_
+#endif //#ifndef _LINUX_HARDWARE_SERIAL_HPP_

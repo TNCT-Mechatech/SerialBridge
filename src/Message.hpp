@@ -25,8 +25,8 @@
         msg.data.data.z = 0;
 */
 
-#ifndef SERIAL_BRIDGE_MESSAGE_H_
-#define SERIAL_BRIDGE_MESSAGE_H_
+#ifndef _SERIAL_BRIDGE_MESSAGE_HPP_
+#define _SERIAL_BRIDGE_MESSAGE_HPP_
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -84,4 +84,4 @@ public:
 
 };
 
-#endif
+#endif //#ifndef _SERIAL_BRIDGE_MESSAGE_HPP_

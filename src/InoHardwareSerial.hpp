@@ -1,5 +1,5 @@
-#ifndef _INO_HARDWARE_SERIAL_H_
-#define _INO_HARDWARE_SERIAL_H_
+#ifndef _INO_HARDWARE_SERIAL_HPP_
+#define _INO_HARDWARE_SERIAL_HPP_
 
 #include <Arduino.h>
 
@@ -39,4 +39,4 @@ private:
 
 };
 
-#endif
+#endif //#ifndef _INO_HARDWARE_SERIAL_HPP_

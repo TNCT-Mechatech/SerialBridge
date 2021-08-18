@@ -1,5 +1,5 @@
-#ifndef _SERIAL_DEV_H_
-#define _SERIAL_DEV_H_
+#ifndef _SERIAL_DEV_HPP_
+#define _SERIAL_DEV_HPP_
 
 class SerialDev
 {
@@ -9,4 +9,4 @@ public:
     virtual int write(unsigned char *data, unsigned int len) = 0;
 };
 
-#endif
+#endif //#ifndef _SERIAL_DEV_HPP_

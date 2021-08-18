@@ -1,9 +1,9 @@
-#ifndef _COBS_SERIAL_H_
-#define _COBS_SERIAL_H_
-
-#include <stdint.h>
+#ifndef _COBS_SERIAL_HPP_
+#define _COBS_SERIAL_HPP_
 
 #include <queue>
+
+#include <stdint.h>
 
 #include "SerialDev.hpp"
 
@@ -29,4 +29,4 @@ private:
 
 };
 
-#endif
+#endif //#ifndef _COBS_SERIAL_HPP_
