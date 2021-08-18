@@ -39,7 +39,7 @@ extern "C"
 class LinuxHardwareSerial : public SerialDev
 {
 public:
-    LinuxHardwareSerial(char port[], int baud_rate = B9600)
+    LinuxHardwareSerial(const char port[], int baud_rate = B9600)
     {
         int fd = open(port, O_RDWR);
         if (fd < 0){
