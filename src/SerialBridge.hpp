@@ -1,7 +1,7 @@
 #ifndef SERIAL_BRIDGE_H_
 #define SERIAL_BRIDGE_H_
 
-#include "utility/CobsSerial.hpp"
+#include "CobsSerial.hpp"
 #include "SerialDev.hpp"
 #include "Message.hpp"
 

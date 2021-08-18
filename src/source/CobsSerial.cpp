@@ -1,4 +1,6 @@
-#include "CobsSerial.hpp"
+#include "../CobsSerial.hpp"
+
+#include "../cobs.hpp"
 
 CobsSerial::CobsSerial(SerialDev *dev)
 {

@@ -1,4 +1,4 @@
-#include "SerialBridge.hpp"
+#include "../SerialBridge.hpp"
 
 SerialBridge::SerialBridge(SerialDev *dev)
 {

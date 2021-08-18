@@ -1,4 +1,4 @@
-#include "cobs.h"
+#include "../cobs.hpp"
 
 /** COBS encode data to buffer
 	@param data Pointer to input data to encode
