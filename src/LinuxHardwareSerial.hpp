@@ -13,6 +13,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <strings.h>
 
 #include "SerialDev.hpp"
 
@@ -24,6 +25,7 @@ public:
 
     ~LinuxHardwareSerial()
     {
+        tcsetattr(_fd, TCSANOW, &_oldtio);
         close(_fd);
     }
 
@@ -35,6 +37,7 @@ public:
 
 private:
     int _fd;
+    struct termios _oldtio;
 };
 
 #endif //#ifndef _LINUX_HARDWARE_SERIAL_HPP_

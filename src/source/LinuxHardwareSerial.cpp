@@ -20,29 +20,44 @@ extern "C"
 
     long fdtell(int fd)
     {
-        return lseek(fd, 0, SEEK_CUR);
+        int len = 0;
+        ioctl(fd, FIONREAD, &len);
+        return len;
     }
 }
 
 LinuxHardwareSerial::LinuxHardwareSerial(const char port[], int baud_rate)
 {
-    int fd = open(port, O_RDWR);
-    if (fd < 0)
-    {
-        perror("open port failed.");
+    int fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
+    if(fd < 0){
+        fprintf(stderr, "open port failed");
         exit(EXIT_FAILURE);
     }
+    fcntl(fd, F_SETFL, FNDELAY);
+
+    tcgetattr(fd, &_oldtio);
 
     struct termios tio;
+
+    tcgetattr(fd, &tio);
+    bzero(&tio, sizeof(tio));
+
     tio.c_cflag += CREAD;  //rx eable
     tio.c_cflag += CLOCAL; //local
     tio.c_cflag += CS8;    //8bit
+
+    tio.c_cflag += IGNPAR;
+    tio.c_cflag += IGNBRK;
+
+    tio.c_cc[VTIME] = 0;
+    tio.c_cc[VMIN] = 1;
 
     cfsetispeed(&tio, baud_rate);
     cfsetospeed(&tio, baud_rate);
 
     cfmakeraw(&tio); //raw mode
 
+    tcflush(fd, TCIFLUSH);
     tcsetattr(fd, TCSANOW, &tio);
     ioctl(fd, TCSETS, &tio);
 
