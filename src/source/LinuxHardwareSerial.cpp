@@ -1,3 +1,5 @@
+#ifdef __linux__
+
 #include "../LinuxHardwareSerial.hpp"
 
 extern "C"
@@ -61,3 +63,5 @@ int LinuxHardwareSerial::write(unsigned char *data, unsigned int len)
 {
     return fdwrite(_fd, data, len);
 }
+
+#endif //#ifdef __linux__

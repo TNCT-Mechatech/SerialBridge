@@ -1,3 +1,5 @@
+#ifdef __linux__
+
 #ifndef _LINUX_HARDWARE_SERIAL_HPP_
 #define _LINUX_HARDWARE_SERIAL_HPP_
 
@@ -36,3 +38,5 @@ private:
 };
 
 #endif //#ifndef _LINUX_HARDWARE_SERIAL_HPP_
+
+#endif //#ifdef __linux__
