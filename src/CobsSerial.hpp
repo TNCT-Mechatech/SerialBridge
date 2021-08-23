@@ -1,8 +1,6 @@
 #ifndef _COBS_SERIAL_HPP_
 #define _COBS_SERIAL_HPP_
 
-#include <queue>
-
 #include <stdint.h>
 
 #include "SerialDev.hpp"
