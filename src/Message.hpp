@@ -64,7 +64,7 @@ public:
         return data.all;
     }
 
-    virtual void packing(uint8_t id)
+    virtual inline void packing(uint8_t id)
     {
         data.id = id;
         int sum = 0;
