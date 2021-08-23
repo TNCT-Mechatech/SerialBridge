@@ -3,6 +3,7 @@
 #include "../cobs.hpp"
 
 CobsSerial::CobsSerial(SerialDev *dev)
+    : _rx_buffer(COBS_RX_BUFFER_SIZE)
 {
     _dev = dev;
     _got_packet = false;
