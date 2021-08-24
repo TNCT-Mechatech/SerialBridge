@@ -16,14 +16,14 @@ int CobsSerial::read(uint8_t *data, const unsigned int max_len)
 
     if(!_data_begin && _got_packet){
         uint8_t val = 1;
-        while (_rx_buffer.size()){
+        while(_rx_buffer.size()){
             val = _rx_buffer.front();
             _rx_buffer.pop();
             tmp[cnt] = val;
             cnt++;
         }
 
-        if (val == 0){ //データパケットの終端で終了
+        if(val == 0){ //データパケットの終端で終了
             _got_packet = false;
             cnt = cobsDecode(tmp, cnt, data);
         }else{
@@ -62,7 +62,6 @@ void CobsSerial::update()
 
                 _data_begin = false;
                 _got_packet = true;
-
                 return;
             }
         }

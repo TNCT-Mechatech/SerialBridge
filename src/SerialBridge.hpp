@@ -12,7 +12,8 @@ public:
 
     SerialBridge(SerialDev *dev);
 
-    ~SerialBridge(){
+    ~SerialBridge()
+    {
         delete _dev;
     }
 
@@ -23,8 +24,7 @@ public:
     void update();
 
 protected:
-    enum
-    {
+    enum{
         STRUCT_MAX_NUM = 10,
     };
 

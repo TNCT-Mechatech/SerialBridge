@@ -8,8 +8,7 @@ SerialBridge::SerialBridge(SerialDev *dev)
 
 void SerialBridge::add_frame(SerialBridge::frame_id id, sb::_Message *str)
 {
-    if (str != NULL && _str[id] == NULL && id <= STRUCT_MAX_NUM)
-    {
+    if(str != NULL && _str[id] == NULL && id <= STRUCT_MAX_NUM){
         _str[id] = str;
         if (_max_data_size < str->size())
             _max_data_size = str->size();
@@ -23,7 +22,7 @@ int SerialBridge::read()
     if(len > 0){
         uint8_t id = tmp[0];
         int sum = 0;
-        for (int i = 0; i < len - 1; i++)
+        for(int i = 0; i < len-1; i++)
             sum += tmp[i];
 
         if(tmp[len - 1] == (uint8_t)(sum & 0xFF) && len == _str[id]->size()){
