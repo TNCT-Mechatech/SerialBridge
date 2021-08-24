@@ -12,10 +12,7 @@ public:
 
     SerialBridge(SerialDev *dev);
 
-    ~SerialBridge()
-    {
-        delete _dev;
-    }
+    ~SerialBridge();
 
     void add_frame(frame_id id, sb::_Message *str);
     int read();

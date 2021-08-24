@@ -64,6 +64,12 @@ LinuxHardwareSerial::LinuxHardwareSerial(const char port[], int baud_rate)
     _fd = fd;
 }
 
+LinuxHardwareSerial::~LinuxHardwareSerial()
+{
+    tcsetattr(_fd, TCSANOW, &_oldtio);
+    close(_fd);
+}
+
 int LinuxHardwareSerial::read()
 {
     return fdread(_fd);

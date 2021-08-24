@@ -23,11 +23,7 @@ class LinuxHardwareSerial : public SerialDev
 public:
     LinuxHardwareSerial(const char port[], int baud_rate = B9600);
 
-    ~LinuxHardwareSerial()
-    {
-        tcsetattr(_fd, TCSANOW, &_oldtio);
-        close(_fd);
-    }
+    ~LinuxHardwareSerial();
 
     virtual int read();
 

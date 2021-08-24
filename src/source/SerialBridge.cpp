@@ -6,6 +6,11 @@ SerialBridge::SerialBridge(SerialDev *dev)
     _max_data_size = 0;
 }
 
+SerialBridge::~SerialBridge()
+{
+    delete _dev;
+}
+
 void SerialBridge::add_frame(SerialBridge::frame_id id, sb::_Message *str)
 {
     if(str != NULL && _str[id] == NULL && id <= STRUCT_MAX_NUM){
