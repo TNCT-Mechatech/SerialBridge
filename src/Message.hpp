@@ -37,9 +37,9 @@ namespace sb    //SerialBridge's namespace
 class _Message
 {
 public:
-    typedef uint8_t msgid_t;
     virtual uint8_t *ptr() = 0;
     virtual void packing(uint8_t id) = 0;
+    virtual void unpacking() = 0;
     virtual int size() = 0;
 };
 
@@ -47,39 +47,47 @@ template <class DataStruct, uint8_t MESSAGE_ID>
 class Message : public _Message
 {
 public:
+    Message()
+    {
+        _all_packet[1] = MESSAGE_ID;
+    }
     typedef union{
-        uint8_t all[sizeof(DataStruct) + 3];
-        struct{
-            uint8_t id;
-            const msgid_t msg_id = (msgid_t)MESSAGE_ID;
-            DataStruct data;
-            uint8_t check_sum;
-        };
+        uint8_t all[sizeof(DataStruct)];
+        DataStruct data;
     } Packet_t;
 
     Packet_t data;
 
     virtual uint8_t *ptr()
     {
-        return data.all;
+        return _all_packet;
     }
 
-    virtual inline void packing(uint8_t id)
+    virtual void packing(uint8_t id)
     {
-        data.id = id;
+        _all_packet[0] = id;
         int sum = 0;
-        data.check_sum = 0;
-        for(int i = 0; i < size(); i++)
-            sum += data.all[i];
+        for(int i = 0; i < size()-1; i++){
+            if(i >= 2)
+                _all_packet[i] = data.all[i-2];
+            sum += _all_packet[i];
+        }
+        _all_packet[size()-1] = (uint8_t)(sum & 0xFF);
+    }
 
-        data.check_sum = (uint8_t)(sum & 0xFF);
+    virtual void unpacking()
+    {
+        for(int i = 2; i < (int)sizeof(DataStruct); i++){
+            data.all[i - 2] = _all_packet[i];
+        }
     }
 
     virtual int size()
     {
         return sizeof(DataStruct) + 3;
     }
-
+private:
+    uint8_t _all_packet[sizeof(DataStruct)+3];
 };
 
 };

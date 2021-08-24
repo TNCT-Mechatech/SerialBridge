@@ -19,7 +19,7 @@ void SerialBridge::add_frame(SerialBridge::frame_id id, sb::_Message *str)
 int SerialBridge::read()
 {
     uint8_t tmp[32] = {};
-    int len = _dev->read(tmp, 32);
+    int len = _dev->read(tmp, 32) - 1;
     if(len > 0){
         uint8_t id = tmp[0];
         int sum = 0;
@@ -29,6 +29,7 @@ int SerialBridge::read()
         if(tmp[len - 1] == (uint8_t)(sum & 0xFF) && len == _str[id]->size()){
             for (int i = 0; i < len; i++)
                 _str[id]->ptr()[i] = tmp[i];
+            _str[id]->unpacking();
             return 0;
         }else
             return -2; //data error
