@@ -18,8 +18,8 @@ void SerialBridge::add_frame(SerialBridge::frame_id id, sb::_Message *str)
 
 int SerialBridge::read()
 {
-    uint8_t tmp[32] = {};
-    int len = _dev->read(tmp, 32) - 1;
+    uint8_t tmp[COBS_RX_BUFFER_SIZE] = {};
+    int len = _dev->read(tmp, COBS_RX_BUFFER_SIZE) - 1;
     if(len > 0){
         uint8_t id = tmp[0];
         int sum = 0;
