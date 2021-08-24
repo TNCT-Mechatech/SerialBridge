@@ -5,7 +5,7 @@
 
 #include "SerialDev.hpp"
 
-#define COBS_TX_BUFFER_SIZE 32
+#define COBS_TX_BUFFER_SIZE 64
 #define COBS_RX_BUFFER_SIZE 64
 
 template <typename Type_t>
