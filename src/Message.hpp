@@ -66,7 +66,7 @@ public:
     virtual void packing(uint8_t id)
     {
         _all_packet[0] = id;
-        int sum = 0;
+        uint32_t sum = 0;
         for(int i = 0; i < size()-1; i++){
             if(i >= 2)
                 _all_packet[i] = data.all[i-2];
