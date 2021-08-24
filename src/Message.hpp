@@ -77,8 +77,8 @@ public:
 
     virtual void unpacking()
     {
-        for(int i = 2; i < (int)sizeof(DataStruct); i++){
-            data.all[i - 2] = _all_packet[i];
+        for(int i = 0; i < (int)sizeof(DataStruct); i++){
+            data.all[i] = _all_packet[i+2];
         }
     }
 
