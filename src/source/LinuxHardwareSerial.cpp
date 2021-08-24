@@ -28,7 +28,7 @@ extern "C"
 
 LinuxHardwareSerial::LinuxHardwareSerial(const char port[], int baud_rate)
 {
-    int fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
+    int fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
     if(fd < 0){
         fprintf(stderr, "open port failed");
         exit(EXIT_FAILURE);
@@ -50,7 +50,7 @@ LinuxHardwareSerial::LinuxHardwareSerial(const char port[], int baud_rate)
     tio.c_cflag += IGNBRK;
 
     tio.c_cc[VTIME] = 0;
-    tio.c_cc[VMIN] = 1;
+    tio.c_cc[VMIN] = 0;
 
     cfsetispeed(&tio, baud_rate);
     cfsetospeed(&tio, baud_rate);
