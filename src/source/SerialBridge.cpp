@@ -26,6 +26,9 @@ int SerialBridge::read()
     int len = _dev->read(tmp, COBS_RX_BUFFER_SIZE) - 1;
     if(len > 0){
         uint8_t id = tmp[0];
+        if(_str[id] == NULL)
+            return -3; //undefined data structure
+
         uint32_t sum = 0;
         for(int i = 0; i < len-1; i++)
             sum += tmp[i];
