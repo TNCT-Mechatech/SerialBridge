@@ -42,7 +42,7 @@ int CobsSerial::write(uint8_t *data, const unsigned int len)
 
 void CobsSerial::update()
 {
-    if(_dev->readable_len()){
+    while(_dev->readable_len()){
         char tmp = _dev->read();
 
         if(_data_begin && _got_packet){
