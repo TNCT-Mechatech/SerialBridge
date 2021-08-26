@@ -6,7 +6,7 @@
 #include "SerialDev.hpp"
 
 #define COBS_TX_BUFFER_SIZE 64
-#define COBS_RX_BUFFER_SIZE 64
+#define COBS_RX_BUFFER_SIZE 256
 
 template <typename Type_t>
 class ring_queue
@@ -78,3 +78,5 @@ private:
 };
 
 #endif //#ifndef _COBS_SERIAL_HPP_
+
+//Backtrace: 0x400d5bee:0x3ffb1e60 0x400d114c:0x3ffb1f90 0x400d8615:0x3ffb1fb0 0x40086a7d:0x3ffb1fd0
