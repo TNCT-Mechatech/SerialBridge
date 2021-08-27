@@ -51,12 +51,8 @@ public:
     {
         _all_packet[1] = MESSAGE_ID;
     }
-    typedef union{
-        uint8_t all[sizeof(DataStruct)];
-        DataStruct data;
-    } Packet_t;
 
-    Packet_t data;
+    DataStruct data;
 
     virtual uint8_t *ptr()
     {
@@ -66,10 +62,13 @@ public:
     virtual void packing(uint8_t id)
     {
         _all_packet[0] = id;
+        _Packet_t tmp;
+        tmp.data = data;
+
         uint32_t sum = 0;
         for(int i = 0; i < size()-1; i++){
             if(i >= 2)
-                _all_packet[i] = data.all[i-2];
+                _all_packet[i] = tmp.all[i-2];
             sum += _all_packet[i];
         }
         _all_packet[size()-1] = (uint8_t)(sum & 0xFF);
@@ -77,9 +76,11 @@ public:
 
     virtual void unpacking()
     {
+        _Packet_t tmp;
         for(int i = 0; i < (int)sizeof(DataStruct); i++){
-            data.all[i] = _all_packet[i+2];
+            tmp.all[i] = _all_packet[i+2];
         }
+        data = tmp.data;
     }
 
     virtual int size()
@@ -87,6 +88,11 @@ public:
         return sizeof(DataStruct) + 3;
     }
 private:
+    typedef union{
+        uint8_t all[sizeof(DataStruct)];
+        DataStruct data;
+    }_Packet_t;
+
     uint8_t _all_packet[sizeof(DataStruct)+3];
 };
 
