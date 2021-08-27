@@ -14,9 +14,11 @@ public:
 
     ~SerialBridge();
 
-    void add_frame(frame_id id, sb::_Message *str);
+    int add_frame(frame_id id, sb::_Message *str);
+    int rm_frame(frame_id id);
+
     int read();
-    void write(frame_id id, sb::_Message *str);
+    int write(frame_id id);
 
     void update();
 
@@ -26,8 +28,10 @@ protected:
     };
 
 private:
+    int _id_2_order(frame_id id);
+
     sb::_Message *_str[STRUCT_MAX_NUM];
-    uint8_t _max_data_size;
+    frame_id _id_list[STRUCT_MAX_NUM];
 
     CobsSerial *_dev;
 };
