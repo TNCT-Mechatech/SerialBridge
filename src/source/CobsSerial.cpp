@@ -12,7 +12,8 @@ CobsSerial::CobsSerial(SerialDev *dev)
 int CobsSerial::read(uint8_t *data, const unsigned int max_len)
 {
     int cnt = 0;
-    uint8_t tmp[max_len] = {};
+    uint8_t tmp[max_len];
+    memset(tmp, 0, max_len);
 
     if(!_data_begin && _got_packet){
         uint8_t val = 1;
