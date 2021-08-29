@@ -3,7 +3,7 @@
 #include "../cobs.hpp"
 
 CobsSerial::CobsSerial(SerialDev *dev)
-    : _rx_buffer(COBS_RX_BUFFER_SIZE)
+    : _rx_buffer(RX_BUFFER_SIZE)
 {
     _dev = dev;
     _got_packet = false;
@@ -12,7 +12,7 @@ CobsSerial::CobsSerial(SerialDev *dev)
 int CobsSerial::read(uint8_t *data)
 {
     int cnt = 0;
-    uint8_t tmp[COBS_RX_BUFFER_SIZE];
+    uint8_t tmp[RX_BUFFER_SIZE];
 
     if(!_data_begin && _got_packet){
         uint8_t val = 1;

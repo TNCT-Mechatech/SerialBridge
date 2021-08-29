@@ -6,9 +6,6 @@
 
 #include "SerialDev.hpp"
 
-#define COBS_TX_BUFFER_SIZE 64
-#define COBS_RX_BUFFER_SIZE 256
-
 template <typename Type_t>
 class ring_queue
 {
@@ -69,6 +66,10 @@ public:
     int write(uint8_t *data, const unsigned int len);
 
     void update();
+
+    enum{
+        RX_BUFFER_SIZE = 256,
+    };
 
 private:
     SerialDev *_dev;

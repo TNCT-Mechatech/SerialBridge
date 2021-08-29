@@ -44,7 +44,7 @@ int SerialBridge::rm_frame(frame_id id)
 
 int SerialBridge::read()
 {
-    uint8_t tmp[COBS_RX_BUFFER_SIZE] = {};
+    uint8_t tmp[CobsSerial::RX_BUFFER_SIZE] = {};
     int len = _dev->read(tmp) - 1;
     if(len > 0){
         int order = _id_2_order(tmp[0]);
