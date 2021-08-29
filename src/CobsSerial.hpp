@@ -64,7 +64,7 @@ class CobsSerial
 public:
     CobsSerial(SerialDev *dev);
 
-    int read(uint8_t *data, const unsigned int max_len = 32);
+    int read(uint8_t *data);
 
     int write(uint8_t *data, const unsigned int len);
 
