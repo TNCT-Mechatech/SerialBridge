@@ -3,16 +3,16 @@
 #include "../cobs.hpp"
 
 CobsSerial::CobsSerial(SerialDev *dev)
-    : _rx_buffer(COBS_RX_BUFFER_SIZE)
+    : _rx_buffer(RX_BUFFER_SIZE)
 {
     _dev = dev;
     _got_packet = false;
 }
 
-int CobsSerial::read(uint8_t *data, const unsigned int max_len)
+int CobsSerial::read(uint8_t *data)
 {
     int cnt = 0;
-    uint8_t tmp[max_len] = {};
+    uint8_t tmp[RX_BUFFER_SIZE];
 
     if(!_data_begin && _got_packet){
         uint8_t val = 1;
@@ -35,7 +35,8 @@ int CobsSerial::read(uint8_t *data, const unsigned int max_len)
 
 int CobsSerial::write(uint8_t *data, const unsigned int len)
 {
-    uint8_t tmp[COBS_TX_BUFFER_SIZE] = {};
+    uint8_t tmp[len+3];
+    std::memset(tmp, 0, len+3);
     int tx_size = cobsEncode(data, len, tmp+1); //先頭の次にcobsコードを代入
     return _dev->write(tmp, tx_size+2);
 }
