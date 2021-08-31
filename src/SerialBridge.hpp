@@ -1,3 +1,10 @@
+/**
+* @file SerialBridge.hpp
+* @brief Communication library for communicating binary packet structures between serial devices.
+* @author Taiyou Komazawa
+* @date 2021/8/11
+*/
+
 #ifndef _SERIAL_BRIDGE_HPP_
 #define _SERIAL_BRIDGE_HPP_
 
@@ -5,6 +12,15 @@
 #include "Message.hpp"
 #include "SerialDev.hpp"
 
+/**
+* @brief Communication class for communicating binary packet structures between serial devices.
+* @details
+* This class provides a protocol for freely communicating extremely lightweight data structures
+*  in one-to-one local serial communication.
+* For example, when data such as sensor data and control instruction values are used
+*  between the microcomputer and the PC, communication is possible simply
+*  by registering the structure that stores the data in this class object.
+*/
 class SerialBridge
 {
 public:
