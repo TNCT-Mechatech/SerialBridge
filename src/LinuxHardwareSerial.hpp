@@ -1,3 +1,10 @@
+/**
+* @file LinuxHardwareSerial.hpp
+* @brief Define the class required for serial communication using SerialBridge in Linux environment.
+* @author Taiyou Komazawa
+* @date 2021/8/11
+*/
+
 #ifdef __linux__
 
 #ifndef _LINUX_HARDWARE_SERIAL_HPP_
@@ -17,11 +24,13 @@
 
 #include "SerialDev.hpp"
 
-
+/**
+* @brief This class is an implementation for Linux devices that inherits the SerialDev class.
+*/
 class LinuxHardwareSerial : public SerialDev
 {
 public:
-    LinuxHardwareSerial(const char port[], int baud_rate = B9600);
+    LinuxHardwareSerial(const char port[], speed_t baud_rate = B9600);
 
     ~LinuxHardwareSerial();
 

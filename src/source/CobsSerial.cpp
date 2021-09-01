@@ -23,7 +23,7 @@ CobsSerial::CobsSerial(SerialDev *dev)
 /**
 * @brief Reads the data in the queue buffer after decoding.
 * @param[out] data Decoded data array.
-* @return int Number of acquired data. (Bytes)
+* @return int Number of acquired data. (bytes)
 * @details
 * This function gets and decodes the packets stored in the queue buffer
 * by the CobsSerial::update function.
@@ -57,7 +57,7 @@ int CobsSerial::read(uint8_t *data)
 * @brief Write the encoded data to the serial device.
 * @param[in] data Raw data array you want to send.
 * @param[in] len Length of data array to send.
-* @return int Number of written data.(byte)
+* @return int Number of written data.(bytes)
 * @details
 * This function encodes the passed data in COBS format
 * and writes it to the serial device.
@@ -65,9 +65,9 @@ int CobsSerial::read(uint8_t *data)
 *
 * The breakdown of the converted data is as follows.
 *
-*   |----raw data----|      : Input (len[byte])
-*   0|--encoded data---|    : After the cobsEncode function (tx_size = len+2[byte])
-*   0|--encoded data---|0   : Data when sending (total size = len+3[byte])
+*   |----raw data----|      : Input (len[bytes])
+*   0|--encoded data---|    : After the cobsEncode function (tx_size = len+2[bytes])
+*   0|--encoded data---|0   : Data when sending (total size = len+3[bytes])
 *
 * 0 ('\0') is the data that represents the start and end of the packet.
 * Whenever data less than 256 bytes in length is COBS encoded, it will be one byte longer.
