@@ -50,14 +50,14 @@ void CobsSerial::update()
             if(tmp){                    //データの始端(始端の次のデータが始端以外であるとき)
                 _rx_buffer.push(tmp);
                 _got_packet = false;
-                return;
+                continue;
             }
         }
 
         if(!tmp){                       //データが0であったときの処理
             if(!_rx_buffer.size()){     //データが入っていないとき
                 _data_begin = true;
-                return;                 //フラグがtrue,trueで終了
+                continue;               //フラグがtrue,trueで継続
             }else{                      //データの終端(データが入っているとき)
                 _rx_buffer.push(tmp);
 
