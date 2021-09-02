@@ -11,11 +11,9 @@
 #include <termios.h>
 #include <unistd.h>
 
-#include <string>
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <strings.h>
 
 #include "SerialDev.hpp"
 
@@ -34,8 +32,6 @@ public:
     virtual int write(unsigned char *data, unsigned int len);
 
 private:
-    int _link_2_path(char *out, unsigned int len, const char port[]);
-
     int _fd;
     struct termios _oldtio;
 };
