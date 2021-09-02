@@ -28,9 +28,15 @@ extern "C"
 
 LinuxHardwareSerial::LinuxHardwareSerial(const char port[], int baud_rate)
 {
-    int fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
+    char buf[1024];
+    if(_link_2_path(buf, sizeof(buf), port) != 0){
+        fprintf(stderr, "Invalid path.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int fd = open(buf, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
     if(fd < 0){
-        fprintf(stderr, "open port failed");
+        fprintf(stderr, "open port failed.\n");
         exit(EXIT_FAILURE);
     }
     fcntl(fd, F_SETFL, FNDELAY);
@@ -83,6 +89,19 @@ int LinuxHardwareSerial::readable_len()
 int LinuxHardwareSerial::write(unsigned char *data, unsigned int len)
 {
     return fdwrite(_fd, data, len);
+}
+
+int LinuxHardwareSerial::_link_2_path(char *out, unsigned int len, const char port[])
+{
+    FILE *fp;
+    std::string cmd = "readlink -f " + std::string(port, strlen(port));
+    if ((fp = popen(cmd.c_str(), "r")) == NULL)
+        return -1;
+    while (!feof(fp))
+        fgets(out, len, fp);
+    out[strlen(out) - 1] = '\0';
+    pclose(fp);
+    return 0;
 }
 
 #endif //#ifdef __linux__
