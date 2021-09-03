@@ -77,9 +77,9 @@ int CobsSerial::read(uint8_t *data)
 int CobsSerial::write(uint8_t *data, const unsigned int len)
 {
     uint8_t tmp[len+3];
-    std::memset(tmp, 0, len+3);
-    int tx_size = cobsEncode(data, len, tmp+1) + 1; //先頭の次にcobsコードを代入
-    return _dev->write(tmp, tx_size+1);
+    memset(tmp, 0, len+3);
+    int tx_size = cobsEncode(data, len, tmp+1); //先頭の次にcobsコードを代入
+    return _dev->write(tmp, tx_size+2);
 }
 
 /**
@@ -97,14 +97,14 @@ void CobsSerial::update()
             if(tmp){                    //データの始端(始端の次のデータが始端以外であるとき)
                 _rx_buffer.push(tmp);
                 _got_packet = false;
-                return;
+                continue;
             }
         }
 
         if(!tmp){                       //データが0であったときの処理
             if(!_rx_buffer.size()){     //データが入っていないとき
                 _data_begin = true;
-                return;                 //フラグがtrue,trueで終了
+                continue;               //フラグがtrue,trueで継続
             }else{                      //データの終端(データが入っているとき)
                 _rx_buffer.push(tmp);
 

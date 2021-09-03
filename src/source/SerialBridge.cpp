@@ -41,6 +41,12 @@ int SerialBridge::add_frame(SerialBridge::frame_id id, sb::_Message *str)
     if(str == NULL)
         return -1;
 
+    int order = _id_2_order(id);
+    if(order >= 0){
+        _str[order] = str;
+        return 0;
+    }
+
     for(int i = 0; i < STRUCT_MAX_NUM; i++){
         if(_str[i] == NULL){
             _str[i] = str;
