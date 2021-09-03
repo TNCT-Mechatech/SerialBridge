@@ -5,7 +5,7 @@
 * @date 2021/9/3
 */
 
-#ifdef MBED_MAJOR_VERSION
+#ifdef __arm__
 
 #include "../MbedHardwareSerial.hpp"
 

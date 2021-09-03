@@ -5,7 +5,7 @@
 * @date 2021/8/28
 */
 
-#ifdef MBED_MAJOR_VERSION
+#ifdef __arm__
 
 #ifndef _MBED_HARDWARE_SERIAL_HPP_
 #define _MBED_HARDWARE_SERIAL_HPP_
