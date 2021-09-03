@@ -5,6 +5,8 @@
 * @date 2021/8/28
 */
 
+#ifdef MBED_MAJOR_VERSION
+
 #ifndef _MBED_HARDWARE_SERIAL_HPP_
 #define _MBED_HARDWARE_SERIAL_HPP_
 
@@ -40,4 +42,6 @@ private:
     //  rx character queue
     ring_queue<uint8_t> _rx_queue;
 };
-#endif
+#endif //   #ifdef _MBED_HARDWARE_SERIAL_HPP_
+
+#endif //   #ifdef MBED_MAJOR_VERSION
