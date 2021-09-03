@@ -2,7 +2,7 @@
 #define _COBS_SERIAL_HPP_
 
 #include <stdint.h>
-#include <cstring>
+#include <string.h>
 
 #include "SerialDev.hpp"
 

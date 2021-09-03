@@ -36,7 +36,7 @@ int CobsSerial::read(uint8_t *data)
 int CobsSerial::write(uint8_t *data, const unsigned int len)
 {
     uint8_t tmp[len+3];
-    std::memset(tmp, 0, len+3);
+    memset(tmp, 0, len+3);
     int tx_size = cobsEncode(data, len, tmp+1); //先頭の次にcobsコードを代入
     return _dev->write(tmp, tx_size+2);
 }
