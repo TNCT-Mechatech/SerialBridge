@@ -5,6 +5,8 @@
 * @date 2021/9/3
 */
 
+#ifdef MBED_MAJOR_VERSION
+
 #include "../MbedHardwareSerial.hpp"
 
 /**
@@ -68,3 +70,5 @@ void MbedHardwareSerial::_serial_rx(void)
         _rx_queue.push(c);
     }
 }
+
+#endif
