@@ -1,3 +1,10 @@
+/**
+* @file LinuxHardwareSerial.cpp
+* @brief Define the class required for serial communication using SerialBridge in Linux environment.
+* @author Taiyou Komazawa
+* @date 2021/8/18
+*/
+
 #ifdef __linux__
 
 #include "../LinuxHardwareSerial.hpp"
@@ -26,7 +33,13 @@ extern "C"
     }
 }
 
-LinuxHardwareSerial::LinuxHardwareSerial(const char port[], int baud_rate)
+/**
+* @brief LinuxHardwareSerial class constructor.
+* @param[in] port Serial device virtual file path.(ex : "/dev/ttyUSB0")
+* @param[in] baud_rate (speed_t) Macro related to baud rate by c_cflag.
+*  (ex : B9600(9600 baudrate), B115200(115200 baudrate))
+*/
+LinuxHardwareSerial::LinuxHardwareSerial(const char port[], speed_t baud_rate)
 {
     int fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
     if(fd < 0){
