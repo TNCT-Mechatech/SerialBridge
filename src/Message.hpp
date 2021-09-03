@@ -43,14 +43,10 @@ public:
     virtual int size() = 0;
 };
 
-template <class DataStruct, uint8_t MESSAGE_ID>
+template <class DataStruct>
 class Message : public _Message
 {
 public:
-    Message()
-    {
-        _all_packet[1] = MESSAGE_ID;
-    }
 
     DataStruct data;
 
@@ -67,8 +63,8 @@ public:
 
         uint32_t sum = 0;
         for(int i = 0; i < size()-1; i++){
-            if(i >= 2)
-                _all_packet[i] = tmp.all[i-2];
+            if(i >= 1)
+                _all_packet[i] = tmp.all[i-1];
             sum += _all_packet[i];
         }
         _all_packet[size()-1] = (uint8_t)(sum & 0xFF);
@@ -78,14 +74,14 @@ public:
     {
         _Packet_t tmp;
         for(int i = 0; i < (int)sizeof(DataStruct); i++){
-            tmp.all[i] = _all_packet[i+2];
+            tmp.all[i] = _all_packet[i+1];
         }
         data = tmp.data;
     }
 
     virtual int size()
     {
-        return sizeof(DataStruct) + 3;
+        return sizeof(DataStruct) + 2;
     }
 private:
     typedef union{
@@ -93,7 +89,7 @@ private:
         DataStruct data;
     }_Packet_t;
 
-    uint8_t _all_packet[sizeof(DataStruct)+3];
+    uint8_t _all_packet[sizeof(DataStruct)+2];
 };
 
 };
