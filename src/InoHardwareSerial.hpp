@@ -5,6 +5,8 @@
 * @date 2021/8/11
 */
 
+#ifdef ARDUINO
+
 #ifndef _INO_HARDWARE_SERIAL_HPP_
 #define _INO_HARDWARE_SERIAL_HPP_
 
@@ -18,40 +20,14 @@
 class InoHardwareSerial : public SerialDev
 {
 public:
-    /**
-    * @brief InoHardwareSerial class constructor.
-    * @param[in] dev (Stream class pointer)A class object for doing character / binary
-    *  based streams in an Arduino environment.
-    * @par Example
-    *   When using "Serial1", declare as follows.
-    *
-    *   InoHardwareSerial obj(&Serial1);
-    *
-    */
-    InoHardwareSerial(Stream *dev)
-    {
-        _dev = dev;
-    }
 
-    virtual int read()
-    {
-        return _dev->read();
-    }
+    InoHardwareSerial(Stream *dev);
 
-    virtual int readable_len()
-    {
-        return _dev->available();
-    }
+    virtual int read();
 
-    virtual int write(unsigned char *data, unsigned int len)
-    {
-        for(int i = 0; i < len; i++){
-            _dev->write(data[i]);
-            if(_dev->availableForWrite() <= 0)
-                return i;
-        }
-        return len;
-    }
+    virtual int readable_len();
+
+    virtual int write(unsigned char *data, unsigned int len);
 
 private:
 
@@ -60,3 +36,5 @@ private:
 };
 
 #endif //#ifndef _INO_HARDWARE_SERIAL_HPP_
+
+#endif //#ifdef ARDUINO

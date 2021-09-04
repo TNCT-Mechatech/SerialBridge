@@ -77,22 +77,39 @@ LinuxHardwareSerial::LinuxHardwareSerial(const char port[], speed_t baud_rate)
     _fd = fd;
 }
 
+/**
+* @brief LinuxHardwareSerial class destructor.
+*/
 LinuxHardwareSerial::~LinuxHardwareSerial()
 {
     tcsetattr(_fd, TCSANOW, &_oldtio);
     close(_fd);
 }
 
+/**
+* @brief Return a received character
+* @return unsigned char
+*/
 int LinuxHardwareSerial::read()
 {
     return fdread(_fd);
 }
 
+/**
+* @brief Return number of available characters
+* @return int of available chracter.
+*/
 int LinuxHardwareSerial::readable_len()
 {
     return (int)fdtell(_fd);
 }
 
+/**
+* @brief A function of write array of charaters
+* @param[in] data (characters pointer) characters
+* @param[in] len (int) length of characters
+* @return int length of characters
+*/
 int LinuxHardwareSerial::write(unsigned char *data, unsigned int len)
 {
     return fdwrite(_fd, data, len);
