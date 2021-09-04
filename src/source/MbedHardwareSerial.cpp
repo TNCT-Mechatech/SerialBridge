@@ -29,7 +29,7 @@ MbedHardwareSerial::MbedHardwareSerial(Serial *dev)
 * @brief Return a received character
 * @return uint8_t 
 */
-virtual int MbedHardwareSerial::read()
+int MbedHardwareSerial::read()
 {
     uint8_t data = _rx_queue.front();
     _rx_queue.pop();
@@ -40,7 +40,7 @@ virtual int MbedHardwareSerial::read()
 * @brief Return number of available characters
 * @return int of available chracter.
 */
-virtual int MbedHardwareSerial::readable_len()
+int MbedHardwareSerial::readable_len()
 {
     return _rx_queue.size();    
 }
@@ -51,7 +51,7 @@ virtual int MbedHardwareSerial::readable_len()
 * @param[in] len (int) length of characters 
 * @return int length of characters
 */ 
-virtual int MbedHardwareSerial::write(unsigned char *data, unsigned int len)
+int MbedHardwareSerial::write(unsigned char *data, unsigned int len)
 {
     for(int i = 0; i < len; i++){
         _dev->putc(data[i]);
