@@ -22,13 +22,22 @@
 class MbedHardwareSerial : public SerialDev
 {
 public:
-    MbedHardwareSerial(Serial *dev);
-
     virtual int read();
 
     virtual int readable_len();
 
     virtual int write(unsigned char *data, unsigned int len);
+
+#if MBED_MAJOR_VERSION >= 6
+
+    MbedHardwareSerial(BufferedSerial *dev);
+
+private:
+    BufferedSerial *_dev;
+
+#else //mbed-os 6 and earlier versions.
+
+    MbedHardwareSerial(Serial *dev);
 
 protected:
     enum{
@@ -41,7 +50,9 @@ private:
     Serial *_dev;
     //  rx character queue
     ring_queue<uint8_t> _rx_queue;
+
+#endif //MBED_MAJOR_VERSION >= 6
 };
 #endif //   #ifdef _MBED_HARDWARE_SERIAL_HPP_
 
-#endif //   #ifdef MBED_MAJOR_VERSION
+#endif //   #ifdef __arm__
