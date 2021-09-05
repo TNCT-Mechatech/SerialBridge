@@ -22,6 +22,16 @@ git commit -m 'Add SerialBridge as a module'
 ```
 git clone https://github.com/TNCT-Mechatech/SerialBridge 
 ```  
+* 最後にmake allをして静的ライブラリを生成します
+1. SerialBridgeディレクトリに移動します
+2. binディレクトリを作成します
+```shell
+mkdir bin
+```
+3. 静的ライブラリを生成します
+```shell
+make all
+```  
 
 ### Arduino
 1. librariesに移動します
