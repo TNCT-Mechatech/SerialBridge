@@ -49,7 +49,64 @@ git clone https://github.com/TNCT-Mechatech/SerialBridge
 ※必要に応じてリビジョンから任意のコミットをマージしてください  
 
 ## 使用方法
-TODO
+### 初期化
+#### **Linux/ROS**
+```c++
+#include <SerialBridge.hpp>
+//  serial driver for linux/ros
+#include <LinuxHardwareSerial.hpp>
+
+#define SERIAL_PATH "/dev/ttyUSB0"
+
+SerialDev *dev = new LinuxHardwareSerial(SERIAL_PATH, B9600);
+SerialBridge serial(dev);
+```  
+SerialパスはLinuxのシンボリックリンクを使用できます。あらかじめボードを接続する場所を決めて接続します。  
+以下のような形でボードがどのUSBポートに接続されているか確認できます。  
+どのポートにするかを決めてLinuxHardwareSerialに渡してください。
+```shell
+$ ls /dev/serial/by-path/
+pci-0000:00:1a.0-usb-0:1:1.0-port0 //右側USBポート
+pci-0000:00:1d.0-usb-0:2:1.0-port0 //左側手前
+pci-0000:00:1d.0-usb-0:1:1.0-port0 //左側奥
+pci-0000:00:1d.7-usb-0:1.4:1.0-port0 //左側奥＋USBハブ
+pci-0000:00:1d.7-usb-0:1.4.1:1.0-port0 //左側奥＋USBハブ＋USBハブ
+```  
+周波数は変更可能です  
+
+#### **Arduino**
+```c++
+#include <SerialBridge.hpp>
+//  serial driver for arduino
+#include <InoHardwareSerial.hpp>
+
+//  Pass the serial derived class entity for Arduino to SerialDev.
+SerialDev *dev = new InoHardwareSerial(&Serial);
+SerialBridge serial(dev);
+
+void setup()
+{
+    Serial.begin(9600);
+}
+
+```  
+周波数は変更可能です  
+
+#### **Mbed**
+* Mbed-os2(Nucleo F303K8, etc.)の場合  
+```c++
+#include <SerialBridge.hpp>
+#include <MbedHardwareSerial.hpp>
+
+//Pass the serial derived class entity for Arduino to SerialDev.
+SerialDev *dev = new MbedHardwareSerial(new Serial(USBTX, USBRX, 9600));
+SerialBridge serial(dev);
+```  
+周波数は変更可能です  
+
+### Messaseの用意とフレームの追加
+
+
 
 ## 開発環境
 - Ubuntu 20.04 LTS  
