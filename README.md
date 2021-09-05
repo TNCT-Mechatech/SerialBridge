@@ -5,12 +5,38 @@
 本ライブラリはマルチプラットフォームに対応するためにC++で書かれています。  
 
 ## 導入
-### ROS
-TODO
+### Linux/ROS
+* プロジェクトにgitを利用している場合  
+submoduleを使います  
+1. プロジェクトディレクトリに移動します
+2. terminalで以下のコマンドを実行しsubmoduleとしてクローンします  
+```shell
+git submodule add https://github.com/TNCT-Mechatech/SerialBridge SerialBridge
+echo 'commit'
+git add SerialBridge
+git commit -m 'Add SerialBridge as a module'
+```  
+* プロジェクトにgitを利用していない場合
+1. プロジェクトディレクトリに移動します
+2. terminalで以下のコマンドを実行しレポジトリをクローンします
+```
+git clone https://github.com/TNCT-Mechatech/SerialBridge 
+```  
+
 ### Arduino
-TODO
+1. librariesに移動します
+2. terminalで以下のコマンドを実行しレポジトリをクローンします
+```
+git clone https://github.com/TNCT-Mechatech/SerialBridge 
+```  
+
 ### Mbed
-TODO
+**[Online Compiler](https://ide.mbed.com/)での開発のみ動作確認されています**  
+1. 任意のプロジェクトを作成します。Mbed-os 2,5,6で動作します
+2. レポジトリをプログラムにクローンします  
+[任意のプロジェクトを右クリック] -> [ライブラリのインポート] -> [URLからインポート] -> 
+[Source URLに[レポジトリのURL](https://github.com/TNCT-Mechatech/SerialBridge/)を入力] -> [Import AsをLibrary] -> [Import]  
+※必要に応じてリビジョンから任意のコミットをマージしてください  
 
 ## 使用方法
 TODO
