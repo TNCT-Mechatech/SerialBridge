@@ -72,7 +72,6 @@ TODO
 ## License
 Apache-2.0 License
 
-
 ## Developer
 - [TaiyouKomazawa](https://github.com/TaiyouKomazawa)(Outside Contributor)
 - [testusuke](https://github.com/testusuke)
