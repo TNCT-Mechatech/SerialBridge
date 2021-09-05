@@ -33,7 +33,7 @@ void setup()
 {
     Serial.begin(9600);
 
-    //Register "hello" message with ID=123.
+    //Register "hello" message with ID = 123.
     serial.add_frame(123, &hello);
     //Stores a string inside the structure of the "hello" message.(I used sprintf.)
     sprintf(hello.data.c, "Hello world from ino.\n");

@@ -41,7 +41,7 @@ DigitalOut myled(LED1);
 
 int main()
 {
-    //Register "hello" message with ID=123.
+    //Register "hello" message with ID = 123.
     serial.add_frame(123, &hello);
     //Stores a string inside the structure of the "hello" message.(I used sprintf.)
     sprintf(hello.data.c, "Hello world from mbed.\n");
@@ -62,11 +62,19 @@ int main()
             //However,since there is only one serial bus,the built-in LED lamp is lit to display the result.
             //(If you can monitor the LCD, other Serial ports, etc., try changing the process here.)
             myled = 1;
+            break;
         }
 
         //Get data from the serial bus.
         serial.update();
     }
+
+    //Processing at the end.
+    //Unregister the message with ID = 123.
+    serial.rm_frame(123);
+    delete dev;
+
+    return 0;
 }
 
 #endif

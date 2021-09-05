@@ -42,7 +42,7 @@ SerialBridge serial(dev);
 
 int main()
 {
-    //Register "hello" message with ID=123.
+    //Register "hello" message with ID = 123.
     serial.add_frame(123, &hello);
     //Stores a string inside the structure of the "hello" message.(I used sprintf.)
     sprintf(hello.data.c, "Hello world from linux.\n");
@@ -58,11 +58,19 @@ int main()
             //If the other party writes the same data structure to ID = 123
             //"hello.data.c" will be updated with the string sent by the other party.
             printf("%s", hello.data.c);
+            break;
         }
 
         //Get data from the serial bus.
         serial.update();
     }
+
+    //Processing at the end.
+    //Unregister the message with ID = 123.
+    serial.rm_frame(123);
+    delete dev;
+
+    return 0;
 }
 
 #endif
