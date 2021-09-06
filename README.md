@@ -168,13 +168,73 @@ SerialBridge serial(...);
 Vector3 msg0;
 
 void main(){
-    serial.add_frame(0 ,msg0);
+    serial.add_frame(0, &msg0);
 }
 ```
-この場合はVector3をid 0番と登録したことになります。  
+この場合はmsg0をid 0番と登録したことになります。  
 
 ### 通信してみる
-TODO
+#### **送信**
+関数  
+- SerialBridge::write(id)  
+idはadd_frame(id, msg)で追加したものを使用します  
+Vector3に値を入れて送信してみましょう  
+```c++
+#include <SerialBridge.hpp>
+//  your message header
+#include <Vector3.h>
+
+SerialBridge serial(...);
+
+//  Message
+Vector3 msg0;   //  sender
+
+void main(){
+    serial.add_frame(0, &msg0);
+
+    msg0.data.x = 0.123;
+    msg0.data.y = 0.456;
+    msg0.data.z = 0.789;
+}
+
+void loop(){
+    //  write
+    serial.write(0);
+}
+```
+Messageの値には、Message.data.VARIABLE_NAME でアクセスできます  
+送信には、serial.write(id)をつかいます  
+
+#### **受信**
+関数
+- SerialBridge::update()  
+受信したパケットをデコードします。read()関数を使用するたびに呼び出してください。  
+- SerialBridge::read()  
+メッセージを読み込みます。受信に成功すると0を返します。  
+Vector3を受信してみましょう  
+```c++
+#include <SerialBridge.hpp>
+//  your message header
+#include <Vector3.h>
+
+SerialBridge serial(...);
+
+//  Message
+Vector3 msg1;   //  listener
+
+void main(){
+    serial.add_frame(0, &msg1);
+}
+
+void loop(){
+    //  update and read
+    serial.update()
+    if (serial.read() == 0)
+    {
+        printf("%f %f %f \n\r", msg1.data.x, mag1.data.y, msg1.data.z);
+    }
+}
+```  
 
 
 ## 開発環境
