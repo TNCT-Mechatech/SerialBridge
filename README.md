@@ -22,7 +22,7 @@ git commit -m 'Add SerialBridge as a module'
 ```
 git clone https://github.com/TNCT-Mechatech/SerialBridge 
 ```  
-* 最後にmake allをして静的ライブラリを生成します
+* 最後にmake allをして静的ライブラリを生成して、リンクさせます
 1. SerialBridgeディレクトリに移動します
 2. binディレクトリを作成します
 ```shell
@@ -31,6 +31,10 @@ mkdir bin
 3. 静的ライブラリを生成します
 ```shell
 make all
+```  
+4. CMakeLists.txtに以下のコードを追加
+```cmake
+target_link_libraries(YOUR_PROJECT_NAME ${CMAKE_SOURCE_DIR}/SerialBridge/bin/libSerialBridge.a)
 ```  
 
 ### Arduino
@@ -72,6 +76,10 @@ pci-0000:00:1d.0-usb-0:1:1.0-port0 //左側奥
 pci-0000:00:1d.7-usb-0:1.4:1.0-port0 //左側奥＋USBハブ
 pci-0000:00:1d.7-usb-0:1.4.1:1.0-port0 //左側奥＋USBハブ＋USBハブ
 ```  
+ex) 右側USBポートを使用する場合  
+```c++
+#define SERIAL_PATH "/dev/serial/by-path/pci-0000:00:1a.0-usb-0:1:1.0-port0"
+```  
 周波数は変更可能です  
 
 #### **Arduino**
@@ -98,14 +106,75 @@ void setup()
 #include <SerialBridge.hpp>
 #include <MbedHardwareSerial.hpp>
 
-//Pass the serial derived class entity for Arduino to SerialDev.
 SerialDev *dev = new MbedHardwareSerial(new Serial(USBTX, USBRX, 9600));
+SerialBridge serial(dev);
+```  
+周波数は変更可能です  
+* Mbed-os5,6の場合  
+```c++
+#include <SerialBridge.hpp>
+#include <MbedHardwareSerial.hpp>
+
+SerialDev *dev = new MbedHardwareSerial(new BufferedSerial(USBTX, USBRX, 9600));
 SerialBridge serial(dev);
 ```  
 周波数は変更可能です  
 
 ### Messaseの用意とフレームの追加
+1. Messageを用意する　　
+structを使ってMessageの内容を決めます  
+```c++
+typedef struct Vector3
+{
+    float x;
+    float y;
+    float z;
+} vector3_t;
+```  
+このようなstructをメッセージとして使ってみましょう  
+Messageを作成するには[Message.hpp](src/Message.hpp)をインクルードする必要があります  
+Vector3.h
+```c++
+#ifndef VECTOR3_H_
+#define VECTOR3_H_
 
+#include <Message.hpp>
+
+typedef struct Vector3
+{
+    float x;
+    float y;
+    float z;
+} vector3_t;
+
+//  create message
+typedef sb::Message<vector3_t> Vector3;
+
+#endif
+```  
+2. SerialBridgeにMessageを登録  
+作成したMessageを利用するには、フレームとして登録する必要があります  
+SerialBridge::add_frame(id, msg)を使います。
+引数として、id(任意の値)とMessageのポインターを渡す必要があります。  
+idは重複しないようにしてください。  
+```c++
+#include <SerialBridge.hpp>
+//  your message header
+#include <Vector3.h>
+
+SerialBridge serial(...);
+
+//  Message
+Vector3 msg0;
+
+void main(){
+    serial.add_frame(0 ,msg0);
+}
+```
+この場合はVector3をid 0番と登録したことになります。  
+
+### 通信してみる
+TODO
 
 
 ## 開発環境
