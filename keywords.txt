@@ -22,8 +22,10 @@ packing         KEYWORD2
 size	        KEYWORD2
 
 add_frame	    KEYWORD2
+rm_frame	    KEYWORD2
 read	        KEYWORD2
 write	        KEYWORD2
+update          KEYWORD2
 
 readable_len    KEYWORD2
 
