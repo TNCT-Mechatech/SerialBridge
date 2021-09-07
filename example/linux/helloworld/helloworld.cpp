@@ -8,7 +8,7 @@
 * When compiling, execute "make all" in the "SerialBridge" directory,
 *  and then execute the following command in the directory where this file is located.
 *
-* g++ -Wall -Wextra  helloworld.cpp ../../../bin/libSerialBridge.a -I ../../../src
+* g++ helloworld.cpp ../../../bin/libSerialBridge.a -I ../../../src
 *
 * It works by executing the generated file "a.out". (Command:"./a.out")
 *
