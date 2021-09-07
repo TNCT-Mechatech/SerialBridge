@@ -1,0 +1,34 @@
+#######################################
+# Syntax Coloring Map For SerialBridge
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SerialBridge	KEYWORD1
+sb	            KEYWORD1
+Message	        KEYWORD1
+SerialDev       KEYWORD1
+
+InoHardwareSerial   KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+ptr 	        KEYWORD2
+packing         KEYWORD2
+size	        KEYWORD2
+
+add_frame	    KEYWORD2
+rm_frame	    KEYWORD2
+read	        KEYWORD2
+write	        KEYWORD2
+update          KEYWORD2
+
+readable_len    KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
