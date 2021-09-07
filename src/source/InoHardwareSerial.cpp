@@ -50,13 +50,7 @@ int InoHardwareSerial::readable_len()
 */
 int InoHardwareSerial::write(unsigned char *data, unsigned int len)
 {
-    for (int i = 0; i < len; i++)
-    {
-        _dev->write(data[i]);
-        if (_dev->availableForWrite() <= 0)
-            return i;
-    }
-    return len;
+    return　_dev->write(data, len);
 }
 
 #endif //#ifdef ARDUINO

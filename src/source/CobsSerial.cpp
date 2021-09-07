@@ -44,11 +44,11 @@ int CobsSerial::read(uint8_t *data)
         }
 
         if(val == 0){ //データパケットの終端で終了
-            _got_packet = false;
             cnt = cobsDecode(tmp, cnt, data);
         }else{
             cnt = 0;
         }
+        _got_packet = false;
     }
     return cnt;
 }
