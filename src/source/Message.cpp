@@ -11,7 +11,7 @@
 * @brief Returns a pointer to the current packet.
 * @return uint8_t* Pointer indicating the packet array.
 */
-uint8_t* sb::_Message::ptr()
+uint8_t* sb::MessageInterface::ptr()
 {
     return _all_packet;
 }
@@ -22,7 +22,7 @@ uint8_t* sb::_Message::ptr()
 * @param[in] id Message ID assigned when sending.
 * @return None
 */
-void sb::_Message::packing(uint8_t id)
+void sb::MessageInterface::packing(uint8_t id)
 {
     _all_packet[0] = id;
 
@@ -40,7 +40,7 @@ void sb::_Message::packing(uint8_t id)
 * This function is used internally by SerialBridge on reception.
 * @return None
 */
-void sb::_Message::unpacking()
+void sb::MessageInterface::unpacking()
 {
     memcpy(_data_ptr(), _all_packet+1, size()-CTRL_DATA_LEN);
 }

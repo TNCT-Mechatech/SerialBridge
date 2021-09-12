@@ -30,7 +30,7 @@ public:
 
     ~SerialBridge();
 
-    int add_frame(frame_id id, sb::_Message *str);
+    int add_frame(frame_id id, sb::MessageInterface *str);
     int rm_frame(frame_id id);
 
     int read();
@@ -46,7 +46,7 @@ protected:
 private:
     int _id_2_order(frame_id id);
 
-    sb::_Message *_str[STRUCT_MAX_NUM];
+    sb::MessageInterface *_str[STRUCT_MAX_NUM];
     frame_id _id_list[STRUCT_MAX_NUM];
 
     CobsSerial *_dev;

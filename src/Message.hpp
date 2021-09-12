@@ -46,12 +46,12 @@ namespace sb
 {
 
 /**
-* @brief sb::Message interface class.
+* @brief sb::MessageInterface interface class.
 * @details
 * This is for abstracting various sb::Messages so that they can be handled
 *  with a unified interface when used within SerialBridge.
 */
-class _Message
+class MessageInterface
 {
 public:
     uint8_t *ptr();
@@ -87,7 +87,7 @@ protected:
 * @tparam DataStruct Specify the type of data structure you want to handle with sb::Message.
 */
 template <class DataStruct>
-class Message : public _Message
+class Message : public MessageInterface
 {
 public:
     /** Data is passed using this member structure. */
