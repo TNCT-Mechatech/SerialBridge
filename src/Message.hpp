@@ -54,32 +54,32 @@ namespace sb
 class _Message
 {
 public:
-    /**
-    * @brief Returns a pointer to the current packet.
-    * @return uint8_t* Pointer indicating the packet array.
-    */
-    virtual uint8_t *ptr() = 0;
+    uint8_t *ptr();
 
-    /**
-    * @brief Stores the data structure in a packet.
-    * This function is used internally by SerialBridge when sending.
-    * @param[in] id Message ID assigned when sending.
-    * @return None
-    */
-    virtual void packing(uint8_t id) = 0;
-
-    /**
-    * @brief Extract the data structure from the packet.
-    * This function is used internally by SerialBridge on reception.
-    * @return None
-    */
-    virtual void unpacking() = 0;
+    void packing(uint8_t id);
+    void unpacking();
 
     /**
     * @brief Returns the length of the current packet.
     * @return int Current packet array length.
     */
     virtual int size() = 0;
+
+protected:
+    /**
+    * @brief A function that returns a data structure.
+    * @return *void Pointer to the data structure of the derived class.
+    */
+    virtual void *_data_ptr() = 0;
+
+    /**
+    * @brief The length of the packet used to identify the data.
+    */
+    enum{
+        CTRL_DATA_LEN = 2,
+    };
+
+    uint8_t *_all_packet;
 };
 
 /**
@@ -90,51 +90,36 @@ template <class DataStruct>
 class Message : public _Message
 {
 public:
-
     /** Data is passed using this member structure. */
     DataStruct data;
 
     /**
-    * @deprecated The following functions are used for internal processing
-    *  and do not support direct user calls.
+    * @brief Message class constructor.
     */
-    virtual uint8_t *ptr()
+    Message()
     {
-        return _all_packet;
+        _all_packet = new uint8_t[sizeof(DataStruct)];
     }
 
     /**
-    * @deprecated The following functions are used for internal processing
-    *  and do not support direct user calls.
+    * @brief Message class destructor.
     */
-    virtual void packing(uint8_t id)
+    ~Message()
     {
-        _all_packet[0] = id;
-
-        uint32_t sum = 0;
-        memcpy(_all_packet+1, &data, sizeof(DataStruct));
-        for(int i = 0; i < size()-1; i++){
-            sum += _all_packet[i];
-        }
-        _all_packet[size()-1] = (uint8_t)(sum & 0xFF);
-    }
-
-    /**
-    * @deprecated The following functions are used for internal processing
-    *  and do not support direct user calls.
-    */
-    virtual void unpacking()
-    {
-        memcpy(&data, _all_packet+1, sizeof(DataStruct));
+        delete _all_packet;
     }
 
     virtual int size()
     {
         return sizeof(DataStruct) + 2;
     }
+
 private:
 
-    uint8_t _all_packet[sizeof(DataStruct)+2];
+    virtual void *_data_ptr()
+    {
+        return &data;
+    }
 };
 
 };
