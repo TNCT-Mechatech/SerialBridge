@@ -39,6 +39,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
 /** SerialBridge's namespace */
 namespace sb
@@ -109,13 +110,10 @@ public:
     virtual void packing(uint8_t id)
     {
         _all_packet[0] = id;
-        _Packet_t tmp;
-        tmp.data = data;
 
         uint32_t sum = 0;
+        memcpy(_all_packet+1, &data, sizeof(DataStruct));
         for(int i = 0; i < size()-1; i++){
-            if(i >= 1)
-                _all_packet[i] = tmp.all[i-1];
             sum += _all_packet[i];
         }
         _all_packet[size()-1] = (uint8_t)(sum & 0xFF);
@@ -127,11 +125,7 @@ public:
     */
     virtual void unpacking()
     {
-        _Packet_t tmp;
-        for(int i = 0; i < (int)sizeof(DataStruct); i++){
-            tmp.all[i] = _all_packet[i+1];
-        }
-        data = tmp.data;
+        memcpy(&data, _all_packet+1, sizeof(DataStruct));
     }
 
     virtual int size()
@@ -139,10 +133,6 @@ public:
         return sizeof(DataStruct) + 2;
     }
 private:
-    typedef union{
-        uint8_t all[sizeof(DataStruct)];
-        DataStruct data;
-    }_Packet_t;
 
     uint8_t _all_packet[sizeof(DataStruct)+2];
 };
