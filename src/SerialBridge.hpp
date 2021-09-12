@@ -26,7 +26,7 @@ class SerialBridge
 public:
     typedef uint8_t frame_id;
 
-    SerialBridge(SerialDev *dev);
+    SerialBridge(SerialDev *dev, const unsigned int buff_size=CobsSerial::RX_BUFFER_SIZE);
 
     ~SerialBridge();
 
@@ -50,6 +50,8 @@ private:
     frame_id _id_list[STRUCT_MAX_NUM];
 
     CobsSerial *_dev;
+
+    const unsigned int _buff_size;
 };
 
 #endif //#ifndef _SERIAL_BRIDGE_HPP_

@@ -12,9 +12,10 @@
 /**
 * @brief CobsSerial class constructor.
 * @param[in] dev (SerialDev class pointer) An argument that indicates a serial device class object.
+* @param[in] buff_size Receive buffer size.(bytes)
 */
-CobsSerial::CobsSerial(SerialDev *dev)
-    : _rx_buffer(RX_BUFFER_SIZE)
+CobsSerial::CobsSerial(SerialDev *dev, const unsigned int buff_size)
+    : _buff_size(buff_size), _rx_buffer(buff_size)
 {
     _dev = dev;
     _got_packet = false;
@@ -32,7 +33,7 @@ CobsSerial::CobsSerial(SerialDev *dev)
 int CobsSerial::read(uint8_t *data)
 {
     int cnt = 0;
-    uint8_t tmp[RX_BUFFER_SIZE];
+    uint8_t tmp[_buff_size];
 
     if(!_data_begin && _got_packet){
         uint8_t val = 1;

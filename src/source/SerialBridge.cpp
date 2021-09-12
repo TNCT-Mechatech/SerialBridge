@@ -10,11 +10,12 @@
 /**
 * @brief SerialBridge class constructor.
 * @param[in] dev (SerialDev class pointer) An argument that indicates a serial device class object.
+* @param[in] buff_size Receive buffer size.(bytes)
 */
-SerialBridge::SerialBridge(SerialDev *dev)
-:   _id_list()
+SerialBridge::SerialBridge(SerialDev *dev, const unsigned int buff_size)
+:   _id_list(), _buff_size(buff_size)
 {
-    _dev = new CobsSerial(dev);
+    _dev = new CobsSerial(dev, _buff_size);
 }
 
 /**
@@ -93,7 +94,7 @@ int SerialBridge::rm_frame(frame_id id)
 */
 int SerialBridge::read()
 {
-    uint8_t tmp[CobsSerial::RX_BUFFER_SIZE] = {};
+    uint8_t tmp[_buff_size] = {};
     int len = _dev->read(tmp) - 1;
     if(len > 0){
         int order = _id_2_order(tmp[0]);
