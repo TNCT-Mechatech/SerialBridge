@@ -41,7 +41,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-/** SerialBridge's namespace */
+/**
+* @namespace sb
+* @brief Namespace to indicate SerialBridge messages.
+*/
 namespace sb
 {
 
@@ -90,7 +93,10 @@ template <class DataStruct>
 class Message : public MessageInterface
 {
 public:
-    /** Data is passed using this member structure. */
+    /**
+    * @brief Data is exchanged through this member variable.
+    * You can specify any structure type here with template parameters.
+    */
     DataStruct data;
 
     /**
