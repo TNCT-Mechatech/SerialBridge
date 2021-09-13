@@ -112,7 +112,7 @@ public:
     */
     ~Message()
     {
-        delete _all_packet;
+        delete[] _all_packet;
     }
 
     virtual int size()
