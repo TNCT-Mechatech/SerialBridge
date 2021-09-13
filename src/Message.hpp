@@ -104,7 +104,7 @@ public:
     */
     Message()
     {
-        _all_packet = new uint8_t[sizeof(DataStruct)];
+        _all_packet = new uint8_t[sizeof(DataStruct) + CTRL_DATA_LEN];
     }
 
     /**
@@ -117,7 +117,7 @@ public:
 
     virtual int size()
     {
-        return sizeof(DataStruct) + 2;
+        return sizeof(DataStruct) + CTRL_DATA_LEN;
     }
 
 private:
