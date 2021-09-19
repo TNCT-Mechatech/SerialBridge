@@ -10,11 +10,12 @@
 /**
 * @brief SerialBridge class constructor.
 * @param[in] dev (SerialDev class pointer) An argument that indicates a serial device class object.
+* @param[in] buff_size Receive buffer size.(bytes)
 */
-SerialBridge::SerialBridge(SerialDev *dev)
-:   _id_list()
+SerialBridge::SerialBridge(SerialDev *dev, const unsigned int buff_size)
+:   _id_list(), _buff_size(buff_size)
 {
-    _dev = new CobsSerial(dev);
+    _dev = new CobsSerial(dev, _buff_size);
 }
 
 /**
@@ -30,13 +31,13 @@ SerialBridge::~SerialBridge()
 * @param[in] id (Message identification number) A number to identify the message.
 * The number can be specified from 0x00 to 0xFF, and up to 256 types of messages can be added.
 * However, you cannot add more messages than specified by SerialBridge::STRUCT_MAX_NUM.
-* @param[in] str (sb::_Message class pointer) A data structure object used to send and receive data.
+* @param[in] str (sb::MessageInterface class pointer) A data structure object used to send and receive data.
 * @return int Whether the message frame was added successfully.
 * @retval  0 : Success.
 * @retval -1 : Failure. The argument str specified was NULL.
 * @retval -2 : Failure. The number of registered message frames has reached the upper limit.
 */
-int SerialBridge::add_frame(SerialBridge::frame_id id, sb::_Message *str)
+int SerialBridge::add_frame(SerialBridge::frame_id id, sb::MessageInterface *str)
 {
     if(str == NULL)
         return -1;
@@ -93,7 +94,7 @@ int SerialBridge::rm_frame(frame_id id)
 */
 int SerialBridge::read()
 {
-    uint8_t tmp[CobsSerial::RX_BUFFER_SIZE] = {};
+    uint8_t tmp[_buff_size] = {};
     int len = _dev->read(tmp) - 1;
     if(len > 0){
         int order = _id_2_order(tmp[0]);

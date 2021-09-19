@@ -39,46 +39,50 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 
-/** SerialBridge's namespace */
+/**
+* @namespace sb
+* @brief Namespace to indicate SerialBridge messages.
+*/
 namespace sb
 {
 
 /**
-* @brief sb::Message interface class.
+* @brief sb::MessageInterface interface class.
 * @details
 * This is for abstracting various sb::Messages so that they can be handled
 *  with a unified interface when used within SerialBridge.
 */
-class _Message
+class MessageInterface
 {
 public:
-    /**
-    * @brief Returns a pointer to the current packet.
-    * @return uint8_t* Pointer indicating the packet array.
-    */
-    virtual uint8_t *ptr() = 0;
+    uint8_t *ptr();
 
-    /**
-    * @brief Stores the data structure in a packet.
-    * This function is used internally by SerialBridge when sending.
-    * @param[in] id Message ID assigned when sending.
-    * @return None
-    */
-    virtual void packing(uint8_t id) = 0;
-
-    /**
-    * @brief Extract the data structure from the packet.
-    * This function is used internally by SerialBridge on reception.
-    * @return None
-    */
-    virtual void unpacking() = 0;
+    void packing(uint8_t id);
+    void unpacking();
 
     /**
     * @brief Returns the length of the current packet.
     * @return int Current packet array length.
     */
     virtual int size() = 0;
+
+protected:
+    /**
+    * @brief A function that returns a data structure.
+    * @return *void Pointer to the data structure of the derived class.
+    */
+    virtual void *_data_ptr() = 0;
+
+    /**
+    * @brief The length of the packet used to identify the data.
+    */
+    enum{
+        CTRL_DATA_LEN = 2,
+    };
+
+    uint8_t *_all_packet;
 };
 
 /**
@@ -86,65 +90,42 @@ public:
 * @tparam DataStruct Specify the type of data structure you want to handle with sb::Message.
 */
 template <class DataStruct>
-class Message : public _Message
+class Message : public MessageInterface
 {
 public:
-
-    /** Data is passed using this member structure. */
+    /**
+    * @brief Data is exchanged through this member variable.
+    * You can specify any structure type here with template parameters.
+    */
     DataStruct data;
 
     /**
-    * @deprecated The following functions are used for internal processing
-    *  and do not support direct user calls.
+    * @brief Message class constructor.
     */
-    virtual uint8_t *ptr()
+    Message()
     {
-        return _all_packet;
+        _all_packet = new uint8_t[sizeof(DataStruct) + CTRL_DATA_LEN];
     }
 
     /**
-    * @deprecated The following functions are used for internal processing
-    *  and do not support direct user calls.
+    * @brief Message class destructor.
     */
-    virtual void packing(uint8_t id)
+    ~Message()
     {
-        _all_packet[0] = id;
-        _Packet_t tmp;
-        tmp.data = data;
-
-        uint32_t sum = 0;
-        for(int i = 0; i < size()-1; i++){
-            if(i >= 1)
-                _all_packet[i] = tmp.all[i-1];
-            sum += _all_packet[i];
-        }
-        _all_packet[size()-1] = (uint8_t)(sum & 0xFF);
-    }
-
-    /**
-    * @deprecated The following functions are used for internal processing
-    *  and do not support direct user calls.
-    */
-    virtual void unpacking()
-    {
-        _Packet_t tmp;
-        for(int i = 0; i < (int)sizeof(DataStruct); i++){
-            tmp.all[i] = _all_packet[i+1];
-        }
-        data = tmp.data;
+        delete[] _all_packet;
     }
 
     virtual int size()
     {
-        return sizeof(DataStruct) + 2;
+        return sizeof(DataStruct) + CTRL_DATA_LEN;
     }
-private:
-    typedef union{
-        uint8_t all[sizeof(DataStruct)];
-        DataStruct data;
-    }_Packet_t;
 
-    uint8_t _all_packet[sizeof(DataStruct)+2];
+private:
+
+    virtual void *_data_ptr()
+    {
+        return &data;
+    }
 };
 
 };

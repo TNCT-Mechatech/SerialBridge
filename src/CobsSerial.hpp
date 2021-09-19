@@ -109,7 +109,7 @@ class CobsSerial
 {
 public:
 
-    CobsSerial(SerialDev *dev);
+    CobsSerial(SerialDev *dev, const unsigned int buff_size=RX_BUFFER_SIZE);
 
     int read(uint8_t *data);
 
@@ -122,6 +122,8 @@ public:
     };
 
 private:
+    const unsigned int _buff_size;
+
     SerialDev *_dev;
 
     ring_queue<uint8_t> _rx_buffer;
