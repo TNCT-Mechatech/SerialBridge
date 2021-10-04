@@ -94,7 +94,8 @@ int SerialBridge::rm_frame(frame_id id)
 */
 int SerialBridge::read()
 {
-    uint8_t tmp[_buff_size] = {};
+    uint8_t tmp[_buff_size];
+    memset(&tmp, 0, _buff_size);
     int len = _dev->read(tmp) - 1;
     if(len > 0){
         int order = _id_2_order(tmp[0]);
