@@ -68,6 +68,14 @@ public:
     */
     virtual int size() = 0;
 
+    /**
+    * @brief Returns whether the message has been updated.
+    * 
+    * @return true  Message has been updated.
+    * @return false Message has not been updated since the last function call.
+    */
+    virtual bool was_updated() = 0;
+
 protected:
     /**
     * @brief A function that returns a data structure.
@@ -83,6 +91,7 @@ protected:
     };
 
     uint8_t *_all_packet;
+    volatile bool _unpacked;
 };
 
 /**
@@ -118,6 +127,13 @@ public:
     virtual int size()
     {
         return sizeof(DataStruct) + CTRL_DATA_LEN;
+    }
+
+    virtual bool was_updated()
+    {
+        bool tmp = _unpacked;
+        _unpacked = false;
+        return tmp;
     }
 
 private:

@@ -43,4 +43,5 @@ void sb::MessageInterface::packing(uint8_t id)
 void sb::MessageInterface::unpacking()
 {
     memcpy(_data_ptr(), _all_packet+1, size()-CTRL_DATA_LEN);
+    _unpacked = true;
 }
