@@ -33,10 +33,9 @@ public:
     int add_frame(frame_id id, sb::MessageInterface *str);
     int rm_frame(frame_id id);
 
-    int read();
     int write(frame_id id);
 
-    void update();
+    int update();
 
 protected:
     enum{
@@ -45,6 +44,7 @@ protected:
 
 private:
     int _id_2_order(frame_id id);
+    int _update_frame();
 
     sb::MessageInterface *_str[STRUCT_MAX_NUM];
     frame_id _id_list[STRUCT_MAX_NUM];

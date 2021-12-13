@@ -51,18 +51,15 @@ int main()
     serial.write(123);
 
     while(1){   //Data reception loop.
-        //Get the message. (If there is an update, the return value is 0)
-        bool read_success = serial.read() == 0;
-
-        if (read_success){  //If read () succeeds.
+        //Get data from the serial bus.
+        serial.update();
+        
+        if (hello.was_updated()){  //When hello is updated.
             //If the other party writes the same data structure to ID = 123
             //"hello.data.c" will be updated with the string sent by the other party.
             printf("%s", hello.data.c);
             break;
         }
-
-        //Get data from the serial bus.
-        serial.update();
     }
 
     //Processing at the end.

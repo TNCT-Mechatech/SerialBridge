@@ -55,10 +55,8 @@ int main()
 
         //Get data from the serial bus.
         serial.update();
-        //Get the message. (If there is an update, the return value is 0)
-        int err = serial.read();
 
-        if(err == 0){   //If read () succeeds.
+        if(msg[1].was_updated()){   //When msg[1] is updated.
             //Display the returned data (data is stored in ID = 1 (msg [1])).
             printf("%d\t%d\t%d\n", msg[1].data.cur, msg[1].data.prv, msg[1].data.prv_prv);
         }

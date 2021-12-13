@@ -39,10 +39,8 @@ int main()
     while (1){
         //Get data from the serial bus.
         serial.update();
-        //Get the message. (If there is an update, the return value is 0)
-        int err = serial.read();
 
-        if(err == 0){   //If read () succeeds.
+        if(msg[0].was_updated()){   //When msg[0] is updated.
             //Assign the received message to the message for sending.
             //Since it is a structure, you can write it in the following way.
             //  msg[1].data = msg[0].data;

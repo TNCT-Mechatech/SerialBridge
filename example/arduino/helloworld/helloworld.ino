@@ -48,10 +48,10 @@ void setup()
 
 void loop()
 {
-    //Get the message. (If there is an update, the return value is 0)
-    static bool read_success = serial.read() == 0;
+    //Get data from the serial bus.
+    serial.update();
 
-    if(read_success){  //If read () succeeds.
+    if(hello.was_updated()){  //When hello is updated.
         //If the other party writes the same data structure to ID = 123
         //"hello.data.c" will be updated with the string sent by the other party.
         //However,since there is only one serial bus,the built-in LED lamp is lit to display the result.
@@ -59,6 +59,4 @@ void loop()
         digitalWrite(LED_BUILTIN, HIGH);
     }
 
-    //Get data from the serial bus.
-    serial.update();
 }

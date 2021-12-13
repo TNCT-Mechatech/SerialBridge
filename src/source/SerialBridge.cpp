@@ -83,6 +83,54 @@ int SerialBridge::rm_frame(frame_id id)
 }
 
 /**
+* @brief Sends the message registered with the specified id.
+* @param[in] id (Message identification number)ID of the message you want to send.
+* @return int Number of written data(byte) or error code.
+* @retval -1 : Unregistered message id.
+*/
+int SerialBridge::write(SerialBridge::frame_id id)
+{
+    int order = _id_2_order(id);
+
+    if(order < 0)
+        return -1; //undefined data structure
+
+    _str[order]->packing(id);
+    return _dev->write(_str[order]->ptr(), _str[order]->size());
+}
+
+/**
+* @brief
+* Update the received data from the serial device.
+* (Note that this function must be called every time in a processing loop to get the data.)
+* @return int Data acquisition status.
+* @retval  0 : Updated message.
+* @retval -1 : Message not received.
+* @retval -2 : Received packet is invalid.
+* @retval -3 : The id of the received message is unregistered.
+*/
+int SerialBridge::update()
+{
+    _dev->update();
+    return _update_frame();
+}
+
+/**
+* @brief A function that converts id to the number of array elements.(private)
+* @param[in] id Message identification number.
+* @return int Number of elements or error.
+* @retval -1 : Its id is not included in the array.
+*/
+int SerialBridge::_id_2_order(frame_id id)
+{
+    for(int i = 0; _str[i] != NULL; i++){
+        if(id == _id_list[i])
+            return i;
+    }
+    return -1;
+}
+
+/**
 * @brief Update the message from the packet data obtained from the serial device.
 * The acquired packet data is checked for consistency from the packet length and checksum,
 *  and passed to the ID registration message.
@@ -92,9 +140,10 @@ int SerialBridge::rm_frame(frame_id id)
 * @retval -2 : Received packet is invalid.
 * @retval -3 : The id of the received message is unregistered.
 */
-int SerialBridge::read()
+int SerialBridge::_update_frame()
 {
-    uint8_t tmp[_buff_size] = {};
+    uint8_t tmp[_buff_size];
+    memset(&tmp, 0, _buff_size);
     int len = _dev->read(tmp) - 1;
     if(len > 0){
         int order = _id_2_order(tmp[0]);
@@ -116,47 +165,4 @@ int SerialBridge::read()
     }
 
     return -1; //cannot received
-}
-
-/**
-* @brief Sends the message registered with the specified id.
-* @param[in] id (Message identification number)ID of the message you want to send.
-* @return int Number of written data(byte) or error code.
-* @retval -1 : Unregistered message id.
-*/
-int SerialBridge::write(SerialBridge::frame_id id)
-{
-    int order = _id_2_order(id);
-
-    if(order < 0)
-        return -1; //undefined data structure
-
-    _str[order]->packing(id);
-    return _dev->write(_str[order]->ptr(), _str[order]->size());
-}
-
-/**
-* @brief
-* Update the received data from the serial device.
-* (Note that this function must be called every time in a processing loop to get the data.)
-* @return None
-*/
-void SerialBridge::update()
-{
-    _dev->update();
-}
-
-/**
-* @brief A function that converts id to the number of array elements.(private)
-* @param[in] id Message identification number.
-* @return int Number of elements or error.
-* @retval -1 : Its id is not included in the array.
-*/
-int SerialBridge::_id_2_order(frame_id id)
-{
-    for(int i = 0; _str[i] != NULL; i++){
-        if(id == _id_list[i])
-            return i;
-    }
-    return -1;
 }
