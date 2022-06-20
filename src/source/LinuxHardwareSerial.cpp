@@ -5,7 +5,7 @@
 * @date 2021/8/18
 */
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__APPLE__)
 
 #include "../LinuxHardwareSerial.hpp"
 
@@ -55,6 +55,7 @@ LinuxHardwareSerial::LinuxHardwareSerial(const char port[], speed_t baud_rate)
     tcgetattr(fd, &tio);
     bzero(&tio, sizeof(tio));
 
+    #ifdef __linux__
     tio.c_cflag += CREAD;  //rx eable
     tio.c_cflag += CLOCAL; //local
     tio.c_cflag += CS8;    //8bit
@@ -64,6 +65,15 @@ LinuxHardwareSerial::LinuxHardwareSerial(const char port[], speed_t baud_rate)
 
     tio.c_cc[VTIME] = 0;
     tio.c_cc[VMIN] = 0;
+    #elif __APPLE__
+    tio.c_cflag |= ( CLOCAL | CREAD |  CS8);    // Configure the device : 8 bits, no parity, no control
+    tio.c_iflag |= ( IGNPAR | IGNBRK );
+    tio.c_cc[VTIME]=0;                          // Timer unused
+    tio.c_cc[VMIN]=0;
+
+    tio.c_cc[VTIME] = 0;
+    tio.c_cc[VMIN] = 0;
+    #endif
 
     cfsetispeed(&tio, baud_rate);
     cfsetospeed(&tio, baud_rate);
@@ -72,7 +82,11 @@ LinuxHardwareSerial::LinuxHardwareSerial(const char port[], speed_t baud_rate)
 
     tcflush(fd, TCIFLUSH);
     tcsetattr(fd, TCSANOW, &tio);
+    #ifdef __linux__
     ioctl(fd, TCSETS, &tio);
+    #elif __APPLE__
+    ioctl(fd, TIOCSETA, &tio);
+    #endif
 
     _fd = fd;
 }
