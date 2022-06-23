@@ -36,7 +36,7 @@ private:
 
     uint8_t _buffer_size;
 
-    int _address = 0x00;
+    int _address;
 
 };
 #endif // _MBED_I2C_HPP_
