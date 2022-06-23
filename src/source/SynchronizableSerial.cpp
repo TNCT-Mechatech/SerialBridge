@@ -19,6 +19,10 @@ SynchronizableSerial::SynchronizableSerial(SynchronizedSerialDev *dev)
   memset(_rx_buffer_, 0, buff_size);
 }
 
+SynchronizableSerial::~SynchronizableSerial() {
+  delete [] _tx_buffer_;
+  delete [] _rx_buffer_;
+}
 int SynchronizableSerial::read(uint8_t *data)
 {
   unsigned int len = _rx_buffer_[0];
