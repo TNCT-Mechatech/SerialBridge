@@ -89,7 +89,7 @@ int CobsSerial::write(uint8_t *data, const unsigned int len)
 * (Note that this function must be called every time in a processing loop to get the data.)
 * @return None
 */
-void CobsSerial::update()
+int CobsSerial::update()
 {
     while(_dev->readable_len()){
         char tmp = _dev->read();
@@ -111,7 +111,7 @@ void CobsSerial::update()
 
                 _data_begin = false;
                 _got_packet = true;
-                return;
+                return 0;
             }
         }
 
@@ -119,4 +119,5 @@ void CobsSerial::update()
             _rx_buffer.push(tmp);
         }
     }
+    return -1;
 }

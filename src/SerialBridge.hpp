@@ -11,6 +11,9 @@
 #include "CobsSerial.hpp"
 #include "Message.hpp"
 #include "SerialDev.hpp"
+#include "SerialInterface.hpp"
+#include "SynchronizedSerialDev.hpp"
+#include "SynchronizableSerial.hpp"
 
 /**
 * @brief Communication class for communicating binary packet structures between serial devices.
@@ -27,6 +30,7 @@ public:
     typedef uint8_t frame_id;
 
     SerialBridge(SerialDev *dev, const unsigned int buff_size=CobsSerial::RX_BUFFER_SIZE);
+    SerialBridge(SynchronizedSerialDev *dev);
 
     ~SerialBridge();
 
@@ -49,7 +53,7 @@ private:
     sb::MessageInterface *_str[STRUCT_MAX_NUM];
     frame_id _id_list[STRUCT_MAX_NUM];
 
-    CobsSerial *_dev;
+    SerialInterface *_dev;
 
     const unsigned int _buff_size;
 };

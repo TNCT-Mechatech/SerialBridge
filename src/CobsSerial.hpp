@@ -12,6 +12,7 @@
 #include <string.h>
 
 #include "SerialDev.hpp"
+#include "SerialInterface.hpp"
 
 /**
 * @brief Fixed length ring queue buffer class.
@@ -105,17 +106,17 @@ private:
 /**
 * @brief Serial communication class with "Consistent Overhead Byte Stuffing".
 */
-class CobsSerial
+class CobsSerial: public SerialInterface
 {
 public:
 
     CobsSerial(SerialDev *dev, const unsigned int buff_size=RX_BUFFER_SIZE);
 
-    int read(uint8_t *data);
+    virtual int read(uint8_t *data);
 
-    int write(uint8_t *data, const unsigned int len);
+    virtual int write(uint8_t *data, const unsigned int len);
 
-    void update();
+    virtual int update();
 
     enum{
         RX_BUFFER_SIZE = 256,

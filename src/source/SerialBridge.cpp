@@ -16,6 +16,17 @@ SerialBridge::SerialBridge(SerialDev *dev, const unsigned int buff_size)
 :   _id_list(), _buff_size(buff_size)
 {
     _dev = new CobsSerial(dev, _buff_size);
+    //
+    for(int i = 0; i < STRUCT_MAX_NUM; i++)
+      _str[i] = NULL;
+}
+
+SerialBridge::SerialBridge(SynchronizedSerialDev *dev)
+:   _id_list(), _buff_size(dev->size())
+{
+    _dev = new SynchronizableSerial(dev);
+    for(int i = 0; i < STRUCT_MAX_NUM; i++)
+      _str[i] = NULL;
 }
 
 /**
