@@ -18,20 +18,20 @@ MbedI2CSlave::MbedI2CSlave(I2CSlave *i2c, uint8_t buffer_size)
 int MbedI2CSlave::update(unsigned char *tx_data, unsigned char *rx_data)
 {
   int state = -1;
-  int i = _dev.receive();
+  int i = _dev->receive();
 
   if (i == I2CSlave::ReadAddressed) {
     //  copy
     char _tx[_buffer_size];
     memcpy(&_tx, tx_data, _buffer_size);
     //  send
-    state = _dev.write(tx_data, _buffer_size);
+    state = _dev->write(tx_data, _buffer_size);
   }
 
   if (i == I2CSlave::WriteGeneral || i == I2CSlave::WriteAddressed) {
     char _rx[_buffer_size];
     //  read
-    state = _dev.read(rx_data, _buffer_size);
+    state = _dev->read(rx_data, _buffer_size);
     //  copy
     memcpy(rx_data, &_rx, _buffer_size);
   }
