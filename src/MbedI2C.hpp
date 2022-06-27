@@ -5,7 +5,7 @@
  * @date 2022/06/23
  */
 
-#if defined(__arm__) && defined(MBED_H)
+#if defined(__arm__)
 
 #ifndef _MBED_I2C_HPP_
 #define _MBED_I2C_HPP_

@@ -5,7 +5,7 @@
  * @date 2022/06/23
  */
 
-#if defined(__arm__) && defined(MBED_H)
+#if defined(__arm__)
 
 #include "../MbedI2C.hpp"
 
