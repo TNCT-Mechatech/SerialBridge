@@ -15,23 +15,31 @@ MbedI2CSlave::MbedI2CSlave(I2CSlave *i2c, uint8_t buffer_size = DEFAULRT_BUFFER_
   _buffer_size = buffer_size;
 }
 
-int MbedI2C::update(unsigned char *tx_data, unsigned char *rx_data)
+int MbedI2CSlave::update(unsigned char *tx_data, unsigned char *rx_data)
 {
   int state = -1;
   int i = _i2c.receive();
 
   if (i == I2CSlave::ReadAddressed) {
+    //  copy
+    char _tx[_buffer_size];
+    memcpy(&_tx, tx_data, _buffer_size);
+    //  send
     state = _i2c.write(tx_data, _buffer_size);
   }
 
   if (i == I2CSlave::WriteGeneral || i == I2CSlave::WriteAddressed) {
+    char _rx[_buffer_size];
+    //  read
     state = _i2c.read(rx_data, _buffer_size);
+    //  copy
+    memcpy(rx_data, &_rx, _buffer_size);
   }
 
   return state;
 }
 
-unsigned int MbedI2C::size() {
+unsigned int MbedI2CSlave::size() {
   return _buffer_size;
 }
 

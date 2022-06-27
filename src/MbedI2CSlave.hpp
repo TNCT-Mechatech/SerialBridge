@@ -19,7 +19,7 @@
 class MbedI2CSlave: public SynchronizedSerialDev
 {
 public:
-    MbedI2C(I2C i2c, uint8_t buffer_size = DEFAULRT_BUFFER_SIZE);
+    MbedI2CSlave(I2CSlave *i2c, uint8_t buffer_size = DEFAULRT_BUFFER_SIZE);
 
     virtual int update(unsigned char *tx_data, unsigned char *rx_data);
 

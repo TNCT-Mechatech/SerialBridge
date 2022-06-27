@@ -12,7 +12,7 @@
 MbedI2C::MbedI2C(I2C *i2c, uint8_t buffer_size = DEFAULRT_BUFFER_SIZE)
 : _i2c(i2c)
 {
-  _buffer_size = buffer_size;
+    _buffer_size = buffer_size;
 }
 
 void MbedI2C::set_address(int address)
@@ -22,9 +22,15 @@ void MbedI2C::set_address(int address)
 
 int MbedI2C::update(unsigned char *tx_data, unsigned char *rx_data)
 {
-  if(_i2c.write(_address, tx_data, _buffer_size) == 0 &&
-          _i2c.read(_address, rx_data, _buffer_size) == 0) return 0;
-  return -1;
+    char _tx[_buffer_size], _rx[_buffer_size];
+    memcpy(&_tx, tx_data, _buffer_size);
+
+    _dev->write(_address, _tx, _buffer_size);
+    _dev->read(_address, _rx, _buffer_size);
+
+    memcpy(rx_data, &_rx, _buffer_size);
+
+    return 0;
 }
 
 unsigned int MbedI2C::size() {
