@@ -10,7 +10,7 @@
 #include "../MbedI2CSlave.hpp"
 
 MbedI2CSlave::MbedI2CSlave(I2CSlave *i2c, uint8_t buffer_size)
-: _i2c(i2c)
+: _dev(i2c)
 {
   _buffer_size = buffer_size;
 }
