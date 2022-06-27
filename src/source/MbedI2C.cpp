@@ -9,8 +9,8 @@
 
 #include "../MbedI2C.hpp"
 
-MbedI2C::MbedI2C(I2C *i2c, uint8_t buffer_size = DEFAULRT_BUFFER_SIZE)
-: _i2c(i2c)
+MbedI2C::MbedI2C(I2C *i2c, uint8_t buffer_size)
+: _dev(i2c)
 {
     _buffer_size = buffer_size;
 }

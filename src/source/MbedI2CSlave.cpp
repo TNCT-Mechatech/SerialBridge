@@ -9,7 +9,7 @@
 
 #include "../MbedI2CSlave.hpp"
 
-MbedI2CSlave::MbedI2CSlave(I2CSlave *i2c, uint8_t buffer_size = DEFAULRT_BUFFER_SIZE)
+MbedI2CSlave::MbedI2CSlave(I2CSlave *i2c, uint8_t buffer_size)
 : _i2c(i2c)
 {
   _buffer_size = buffer_size;
@@ -18,20 +18,20 @@ MbedI2CSlave::MbedI2CSlave(I2CSlave *i2c, uint8_t buffer_size = DEFAULRT_BUFFER_
 int MbedI2CSlave::update(unsigned char *tx_data, unsigned char *rx_data)
 {
   int state = -1;
-  int i = _i2c.receive();
+  int i = _dev.receive();
 
   if (i == I2CSlave::ReadAddressed) {
     //  copy
     char _tx[_buffer_size];
     memcpy(&_tx, tx_data, _buffer_size);
     //  send
-    state = _i2c.write(tx_data, _buffer_size);
+    state = _dev.write(tx_data, _buffer_size);
   }
 
   if (i == I2CSlave::WriteGeneral || i == I2CSlave::WriteAddressed) {
     char _rx[_buffer_size];
     //  read
-    state = _i2c.read(rx_data, _buffer_size);
+    state = _dev.read(rx_data, _buffer_size);
     //  copy
     memcpy(rx_data, &_rx, _buffer_size);
   }

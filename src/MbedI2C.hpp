@@ -32,7 +32,7 @@ public:
 
 private:
     //  i2c device
-    I2C *_i2c;
+    I2C *_dev;
 
     uint8_t _buffer_size;
 
