@@ -23,21 +23,21 @@ void ArduinoI2C::set_address(int address)
 int ArduinoI2C::update(unsigned char *tx_data, unsigned char *rx_data)
 {
     //  start condition
-    _dev.beginTransmission(_address);
+    _dev->beginTransmission(_address);
     //  write
-    _dev.write((char*)tx_data);
+    _dev->write((char*)tx_data);
     //  send and stop condition
-    _dev.endTransmission();
+    _dev->endTransmission();
 
     //  read request
-    _dev.request(_address, _buffer_size);
+    _dev->request(_address, _buffer_size);
     //  read
     int i = 0;
-    while (_dev.available()) {
+    while (_dev->available()) {
       if (i >= _buffer_size) {
         break;
       }
-      rx_data[i] = _dev.read();
+      rx_data[i] = _dev->read();
       //  counter
       i++;
     }

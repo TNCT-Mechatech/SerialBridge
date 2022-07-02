@@ -10,6 +10,8 @@
 #ifndef _ARDUINO_I2C_HPP_
 #define _ARDUINO_I2C_HPP_
 
+#include <Arduino.h>
+#include <Wire.h>
 #include "SynchronizedSerialDev.hpp"
 
 class ArduinoI2C: public SynchronizedSerialDev
