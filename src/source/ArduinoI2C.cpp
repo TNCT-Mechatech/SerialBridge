@@ -30,7 +30,7 @@ int ArduinoI2C::update(unsigned char *tx_data, unsigned char *rx_data)
     _dev->endTransmission();
 
     //  read request
-    _dev->request(_address, _buffer_size);
+    _dev->requestFrom((int)_address, (int)_buffer_size);
     //  read
     int i = 0;
     while (_dev->available()) {
