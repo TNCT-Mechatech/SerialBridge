@@ -10,12 +10,15 @@
 #ifndef _ARDUINO_I2C_SLAVE_HPP_
 #define _ARDUINO_I2C_SLAVE_HPP_
 
+#include <Arduino.h>
+#include <Wire.h>
+
 #include "SynchronizedSerialDev.hpp"
 
 class ArduinoI2CSlave: public SynchronizedSerialDev
 {
 public:
-    ArduinoI2CSlave(Wire *wire, uint8_t buffer_size = DEFAULRT_BUFFER_SIZE);
+    ArduinoI2CSlave(TwoWire *wire, uint8_t buffer_size = DEFAULRT_BUFFER_SIZE);
 
     virtual int update(unsigned char *tx_data, unsigned char *rx_data);
 
@@ -27,13 +30,13 @@ public:
 
 private:
     //  i2c device
-    Wire *_dev;
+    TwoWire *_dev;
 
     uint8_t _buffer_size;
 
     //  internal buffer
-    unsigned char _tx_buffer[_buffer_size];
-    unsigned char _rx_buffer[_buffer_size];
+    unsigned char *_tx_buffer;
+    unsigned char *_rx_buffer;
 
     //  handler
     void receive_handler(int size);

@@ -15,7 +15,7 @@
 class ArduinoI2C: public SynchronizedSerialDev
 {
 public:
-    ArduinoI2C(Wire *wire, uint8_t buffer_size = DEFAULRT_BUFFER_SIZE);
+    ArduinoI2C(TwoWire *wire, uint8_t buffer_size = DEFAULRT_BUFFER_SIZE);
 
     virtual int update(unsigned char *tx_data, unsigned char *rx_data);
 
@@ -29,7 +29,7 @@ public:
 
 private:
     //  i2c device
-    Wire *_dev;
+    TwoWire *_dev;
 
     uint8_t _buffer_size;
 

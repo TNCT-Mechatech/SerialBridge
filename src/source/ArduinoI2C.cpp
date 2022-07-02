@@ -9,7 +9,7 @@
 
 #include "../ArduinoI2C.hpp"
 
-ArduinoI2C::ArduinoI2C(Wire *wire, uint8_t buffer_size)
+ArduinoI2C::ArduinoI2C(TwoWire *wire, uint8_t buffer_size)
 : _dev(wire)
 {
     _buffer_size = buffer_size;

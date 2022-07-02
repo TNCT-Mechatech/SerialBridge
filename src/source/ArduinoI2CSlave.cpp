@@ -9,10 +9,10 @@
 
 #include "../ArduinoI2CSlave.hpp"
 
-ArduinoI2CSlave::ArduinoI2CSlave(Wire *wire, uint8_t buffer_size)
-: _dev(wire)
+ArduinoI2CSlave::ArduinoI2CSlave(TwoWire *wire, uint8_t buffer_size)
+: _dev(wire), _buffer_size(buffer_size),
+ _tx_buffer(new unsigned char[buffer_size]), _rx_buffer(new unsigned char[buffer_size])
 {
-    _buffer_size = buffer_size;
     //  zero fill
     memset(&_tx_buffer, 0, _buffer_size);
     memset(&_rx_buffer, 0, _buffer_size);
