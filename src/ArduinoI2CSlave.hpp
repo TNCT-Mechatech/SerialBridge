@@ -15,6 +15,10 @@
 
 #include "SynchronizedSerialDev.hpp"
 
+//  event handler setting function
+#define SET_SLAVE_RECEIVE_HANDLER(wire, slave) (wire.onReceive([] (int howMany) {slave->receive_handler(howMany);}))
+#define SET_SLAVE_REQUEST_HANDLER(wire, slave) (wire.onRequest([] () {slave->request_handler();}))
+
 class ArduinoI2CSlave: public SynchronizedSerialDev
 {
 public:
@@ -23,6 +27,10 @@ public:
     virtual int update(unsigned char *tx_data, unsigned char *rx_data);
 
     virtual unsigned int size();
+
+    //  handler
+    void receive_handler(int size);
+    void request_handler();
 
     enum{
     	DEFAULRT_BUFFER_SIZE = 32,
@@ -37,10 +45,6 @@ private:
     //  internal buffer
     unsigned char *_tx_buffer;
     unsigned char *_rx_buffer;
-
-    //  handler
-    void receive_handler(int size);
-    void request_handler();
 };
 
 #endif // _ARDUINO_I2C_SLAVE_HPP_

@@ -16,10 +16,6 @@ ArduinoI2CSlave::ArduinoI2CSlave(TwoWire *wire, uint8_t buffer_size)
     //  zero fill
     memset(&_tx_buffer, 0, _buffer_size);
     memset(&_rx_buffer, 0, _buffer_size);
-
-    //  set up handler
-    _dev->onReceive(receive_handler);
-    _dev->onRequest(request_handler);
 }
 
 int ArduinoI2CSlave::update(unsigned char *tx_data, unsigned char *rx_data)
@@ -35,15 +31,32 @@ unsigned int ArduinoI2CSlave::size() {
 
 void ArduinoI2CSlave::receive_handler(int size)
 {
+    Serial.println("onReceive");
+
+    Serial.print("size: ");
+    Serial.println(size);
+
+
     for (int i = 0; i < size; i++) {
         uint8_t c = _dev->read();
         _rx_buffer[i] = c;
+
+        Serial.print(_rx_buffer[i]);
+        Serial.print(" ");
     }
+    Serial.println("\n\rend receive");
 }
 
 void ArduinoI2CSlave::request_handler()
 {
-    _dev->write(_tx_buffer, _buffer_size);
+    Serial.println("onRequest");
+    for (int i = 0; i < size(); i++) {
+        Serial.print(_tx_buffer[i]);
+        Serial.print(" ");
+    }
+    Serial.println("\n\rend write");
+
+    _dev->write((char*)_tx_buffer, _buffer_size);
 }
 
 #endif
