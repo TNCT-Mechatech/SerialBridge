@@ -29,7 +29,7 @@ public:
     virtual unsigned int size();
 
     //  handler
-    void receive_handler(int size);
+    void receive_handler();
     void request_handler();
 
     enum{

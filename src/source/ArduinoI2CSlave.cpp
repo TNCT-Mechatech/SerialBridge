@@ -29,34 +29,27 @@ unsigned int ArduinoI2CSlave::size() {
     return _buffer_size;
 }
 
-void ArduinoI2CSlave::receive_handler(int size)
+void ArduinoI2CSlave::receive_handler()
 {
-    Serial.println("onReceive");
+    Serial.println("rec");
 
-    Serial.print("size: ");
-    Serial.println(size);
-
-
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < (int)_buffer_size && _dev->available(); i++) {
         uint8_t c = _dev->read();
         _rx_buffer[i] = c;
-
-        Serial.print(_rx_buffer[i]);
-        Serial.print(" ");
     }
-    Serial.println("\n\rend receive");
+    Serial.println("f:rec");
 }
 
 void ArduinoI2CSlave::request_handler()
 {
-    Serial.println("onRequest");
+    Serial.println("req");
+    /*
     for (int i = 0; i < size(); i++) {
         Serial.print(_tx_buffer[i]);
         Serial.print(" ");
     }
-    Serial.println("\n\rend write");
-
-    _dev->write((char*)_tx_buffer, _buffer_size);
+    */
+    _dev->write((char*)_tx_buffer, (int)_buffer_size);
 }
 
 #endif
