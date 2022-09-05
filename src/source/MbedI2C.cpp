@@ -22,14 +22,8 @@ void MbedI2C::set_address(int address)
 
 int MbedI2C::update(unsigned char *tx_data, unsigned char *rx_data)
 {
-    char _tx[_buffer_size], _rx[_buffer_size];
-    memcpy(&_tx, tx_data, _buffer_size);
-
-    _dev->write(_address, _tx, _buffer_size);
-    _dev->read(_address, _rx, _buffer_size);
-
-    memcpy(rx_data, &_rx, _buffer_size);
-
+    _dev->write(_address, (char*)tx_data, _buffer_size, true);
+    _dev->read(_address, (char*)rx_data, _buffer_size);
     return 0;
 }
 
