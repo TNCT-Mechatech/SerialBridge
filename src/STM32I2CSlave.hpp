@@ -24,7 +24,9 @@ public:
 
     virtual unsigned int size();
 
-    virtual void i2c_callback(uint8_t TransferDirection, uint16_t AddrMatchCode);
+    //  internal buffer
+    unsigned char *_tx_buffer;
+    unsigned char *_rx_buffer;
 
 private:
     enum {
@@ -37,9 +39,6 @@ private:
     //  buffer size
     uint8_t _buffer_size;
 
-    //  internal buffer
-    unsigned char *_tx_buffer;
-    unsigned char *_rx_buffer;
 };
 #endif  //  _STM32_I2C_SLAVE_HPP_
 #endif  //  ARM
