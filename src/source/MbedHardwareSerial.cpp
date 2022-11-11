@@ -78,7 +78,7 @@ int MbedHardwareSerial::readable_len()
 
 #if MBED_MAJOR_VERSION >= 6
 
-    return _dev->size();
+    return _dev->readable();
 
 #else //mbed-os 6 and earlier versions.
 
