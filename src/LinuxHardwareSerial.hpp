@@ -5,7 +5,7 @@
 * @date 2021/8/11
 */
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__APPLE__)
 
 #ifndef _LINUX_HARDWARE_SERIAL_HPP_
 #define _LINUX_HARDWARE_SERIAL_HPP_
