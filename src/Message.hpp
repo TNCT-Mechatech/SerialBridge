@@ -12,11 +12,10 @@
 *           int32_t y;
 *           int32_t z;
 *       } Vector3_t;
-*       //Define data classification number.
-*       #define VECTOR3_ID 0
+ *
 *       //Put the data format in the message type.
 *       //(Since the name is long, you can rename it with typedef as follows.)
-*       typedef sb::Message<Vector3_t,VECTOR3_ID> Vector3;
+*       typedef sb::Message<Vector3_t> Vector3;
 *
 * @par How to use:
 *       Vector3 msg; //Declare a message.

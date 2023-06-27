@@ -11,8 +11,7 @@
 * @brief Returns a pointer to the current packet.
 * @return uint8_t* Pointer indicating the packet array.
 */
-uint8_t* sb::MessageInterface::ptr()
-{
+uint8_t *sb::MessageInterface::ptr() {
     return _all_packet;
 }
 
@@ -22,17 +21,21 @@ uint8_t* sb::MessageInterface::ptr()
 * @param[in] id Message ID assigned when sending.
 * @return None
 */
-void sb::MessageInterface::packing(uint8_t id)
-{
+void sb::MessageInterface::packing(uint8_t id) {
+    //  set frame id
     _all_packet[0] = id;
 
+    //  copy message data
+    memcpy(_all_packet + 1, _data_ptr(), size() - CTRL_DATA_LEN);
+
+    //  summary of data for checksum
     uint32_t sum = 0;
-    memcpy(_all_packet+1, _data_ptr(), size()-CTRL_DATA_LEN);
-    for (int i = 0; i < size() - 1; i++)
-    {
+    //  sum all data
+    for (int i = 0; i < size() - 1; i++) {
         sum += _all_packet[i];
     }
-    _all_packet[size()-1] = (uint8_t)(sum & 0xFF);
+    //  set checksum data
+    _all_packet[size() - 1] = (uint8_t) (sum & 0xFF);
 }
 
 /**
@@ -40,8 +43,7 @@ void sb::MessageInterface::packing(uint8_t id)
 * This function is used internally by SerialBridge on reception.
 * @return None
 */
-void sb::MessageInterface::unpacking()
-{
-    memcpy(_data_ptr(), _all_packet+1, size()-CTRL_DATA_LEN);
+void sb::MessageInterface::unpacking() {
+    memcpy(_data_ptr(), _all_packet + 1, size() - CTRL_DATA_LEN);
     _unpacked = true;
 }
