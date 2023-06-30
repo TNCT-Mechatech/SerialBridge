@@ -97,6 +97,8 @@ int CANSerialBridge::write(CANSerialBridge::frame_id id) {
     _str[order]->packing();
 
     acan2517fd::CANFDMessage canfdMessage;
+    //  id
+    canfdMessage.id = id;
     //  find optimal message length
     canfdMessage.len = find_optimal_size(_str[order]->size());
     //  copy data
