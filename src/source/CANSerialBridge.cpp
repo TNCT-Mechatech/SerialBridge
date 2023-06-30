@@ -125,7 +125,7 @@ int CANSerialBridge::write(CANSerialBridge::frame_id id) {
 */
 int CANSerialBridge::update() {
     //  update device
-    _dev->poll();
+//    _dev->poll();
 
     //  update frame
     return _update_frame();

@@ -3,8 +3,8 @@
 
 #include "Message.hpp"
 //  acan2517fd
-#include "../acan2517FD/src/ACAN2517FD.h"
-#include "../acan2517FD/src/CANFDMessage.h"
+#include <ACAN2517FD.h>
+#include <CANFDMessage.h>
 
 using namespace acan2517fd;
 
@@ -20,8 +20,6 @@ public:
     typedef uint32_t frame_id;
 
     CANSerialBridge(ACAN2517FD *dev);
-
-    ~CANSerialBridge();
 
     int add_frame(frame_id id, sb::CANMessageInterface *str);
     int rm_frame(frame_id id);
