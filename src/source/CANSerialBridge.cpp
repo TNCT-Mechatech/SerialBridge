@@ -179,12 +179,12 @@ int CANSerialBridge::_update_frame() {
         //  summary of data for check sum
         uint32_t sum = 0;
         //  add all data
-        for (int i = 0; i < canfdMessage.len - 1; i++) {
+        for (int i = 0; i < _str[order]->size() - 1; i++) {
             sum += canfdMessage.data[i];
         }
 
         //  check summary of data, message data length
-        if (canfdMessage.data[canfdMessage.len - 1] == (uint8_t) (sum & 0xFF)) {
+        if (canfdMessage.data[_str[order]->size() - 1] == (uint8_t) (sum & 0xFF)) {
             //  insert data to message
             for (int i = 0; i < _str[order]->size(); i++) {
                 _str[order]->ptr()[i] = canfdMessage.data[i];
