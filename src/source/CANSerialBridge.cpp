@@ -186,9 +186,7 @@ int CANSerialBridge::_update_frame() {
         //  check summary of data, message data length
         if (canfdMessage.data[_str[order]->size() - 1] == (uint8_t) (sum & 0xFF)) {
             //  insert data to message
-            for (int i = 0; i < _str[order]->size(); i++) {
-                _str[order]->ptr()[i] = canfdMessage.data[i];
-            }
+            memcpy(_str[order]->ptr(), &canfdMessage.data, _str[order]->size());
 
             //  unpack message
             _str[order]->unpacking();
