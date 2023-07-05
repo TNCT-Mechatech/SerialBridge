@@ -84,6 +84,6 @@ void sb::CANMessageInterface::packing() {
 * @return None
 */
 void sb::CANMessageInterface::unpacking() {
-    memcpy(_data_ptr(), _all_packet + 1, size() - CTRL_DATA_LEN);
+    memcpy(_data_ptr(), _all_packet, size() - CTRL_DATA_LEN);
     _unpacked = true;
 }
