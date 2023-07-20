@@ -153,11 +153,16 @@ int CANSerialBridge::_id_2_order(frame_id id) {
 * The acquired packet data is checked for consistency from the packet length and checksum,
 *  and passed to the ID registration message.
 * @return int The number of received message.
+* @retval  0 : Updated message.
+* @retval -1 : Message not received.
+* @retval -2 : Received packet is invalid.
+* @retval -3 : The id of the received message is unregistered.
 */
 int CANSerialBridge::_update_frame() {
     int received_count = 0;
 
-    while (_dev->available()) {
+    //  Update one frame by one call for improving data integrity
+    if (_dev->available()) {
         acan2517fd::CANFDMessage canfdMessage;
 
         //  receive message
@@ -165,7 +170,7 @@ int CANSerialBridge::_update_frame() {
 
         //  failed to receive
         if (!is_received) {
-            continue;
+            return -1;
         }
 
         //  get order by frame_id
@@ -173,7 +178,7 @@ int CANSerialBridge::_update_frame() {
 
         if (order < 0) {
             //  failed to find message
-            continue;
+            return -3;
         }
 
         //  summary of data for check sum
@@ -190,12 +195,12 @@ int CANSerialBridge::_update_frame() {
 
             //  unpack message
             _str[order]->unpacking();
-
-            received_count++;
+        } else {
+            //  message is invalid
+            return -2;
         }
     }
-
-    return received_count;
+    return -1;;
 }
 
 
