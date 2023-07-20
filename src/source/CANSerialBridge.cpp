@@ -126,9 +126,6 @@ int CANSerialBridge::write(CANSerialBridge::frame_id id) {
 * @retval -3 : The id of the received message is unregistered.
 */
 int CANSerialBridge::update() {
-    //  update device
-//    _dev->poll();
-
     //  update frame
     return _update_frame();
 }
