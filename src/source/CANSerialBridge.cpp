@@ -13,7 +13,7 @@
 * @param[in] buff_size Receive buffer size.(bytes)
 */
 CANSerialBridge::CANSerialBridge(ACAN2517FD *dev)
-        : _dev(dev), _id_list() {}
+        : _dev(dev), _id_list(), _error_count(0) {}
 
 /**
 * @brief A function that registers the message frame to be used.
@@ -203,6 +203,20 @@ int CANSerialBridge::_update_frame() {
     return -1;;
 }
 
+/**
+ * Get count of error
+ * @return error count
+ */
+int CANSerialBridge::error_count() {
+    return _error_count;
+}
+
+/**
+ * Reset count of error
+ */
+void CANSerialBridge::reset_error_count() {
+    _error_count = 0;
+}
 
 int CANSerialBridge::find_optimal_size(uint8_t size) {
     uint8_t optimal_size = 8;
