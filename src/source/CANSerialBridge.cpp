@@ -1,3 +1,5 @@
+#ifdef SB_CANFD
+
 /**
 * @file CANSerialBridge.cpp
 * @brief Communication library for communicating binary packet structures between CAN FD devices.
@@ -238,3 +240,5 @@ int CANSerialBridge::find_optimal_size(uint8_t size) {
 
     return optimal_size;
 }
+
+#endif  //#ifdef SB_CANFD
