@@ -5,7 +5,7 @@
 * @date 2021/9/3
 */
 
-#if defined(__arm__) && defined(MBED_SB)
+#if defined(__arm__) && defined(MBED)
 
 #include "../MbedHardwareSerial.hpp"
 
