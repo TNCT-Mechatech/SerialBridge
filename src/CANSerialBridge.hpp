@@ -28,6 +28,9 @@ public:
 
     int update();
 
+    int error_count();
+    void reset_error_count();
+
 protected:
     enum{
         STRUCT_MAX_NUM = 10,
@@ -42,6 +45,8 @@ private:
     frame_id _id_list[STRUCT_MAX_NUM];
 
     ACAN2517FD *_dev;
+
+    int _error_count;
 };
 
 #endif //#ifndef _CAN_SERIAL_BRIDGE_HPP_
