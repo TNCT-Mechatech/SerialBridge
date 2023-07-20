@@ -1,3 +1,5 @@
+#ifdef SB_CANFD
+
 #ifndef _CAN_SERIAL_BRIDGE_HPP_
 #define _CAN_SERIAL_BRIDGE_HPP_
 
@@ -50,3 +52,5 @@ private:
 };
 
 #endif //#ifndef _CAN_SERIAL_BRIDGE_HPP_
+
+#endif  //#ifdef SB_CANFD
