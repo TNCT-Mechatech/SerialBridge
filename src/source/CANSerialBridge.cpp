@@ -193,6 +193,8 @@ int CANSerialBridge::_update_frame() {
             //  unpack message
             _str[order]->unpacking();
         } else {
+            _error_count++;
+
             //  message is invalid
             return -2;
         }
