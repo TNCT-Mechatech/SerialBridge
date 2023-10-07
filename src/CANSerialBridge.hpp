@@ -35,7 +35,7 @@ public:
 
 protected:
     enum{
-        STRUCT_MAX_NUM = 10,
+        STRUCT_MAX_NUM = 30,
     };
 
 private:
