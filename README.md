@@ -59,21 +59,21 @@ git clone https://github.com/TNCT-Mechatech/SerialBridge
 
 1. 任意のプロジェクトを作成します
 2. レポジトリをプログラムにクローンします
-   1. 任意のプロジェクトを右クリック
-   2. Add Mbed Library 
-   3. URLに[レポジトリのURL](https://github.com/TNCT-Mechatech/SerialBridge/)を入力し、Next
-   4. 特に理由がなければ、`main` を選ぶ
+    1. 任意のプロジェクトを右クリック
+    2. Add Mbed Library
+    3. URLに[レポジトリのURL](https://github.com/TNCT-Mechatech/SerialBridge/)を入力し、Next
+    4. 特に理由がなければ、`main` を選ぶ
 3. `mbed_app.json`ファイルを作成し、以下の内容を入力
 
 ```json
 {
-    "config": {
-        "serialbridge_for_mbed": {
-            "help": "Macro",
-            "macro_name": "MBED",
-            "value": 0
-        }
+  "config": {
+    "serialbridge_for_mbed": {
+      "help": "Macro",
+      "macro_name": "MBED",
+      "value": 0
     }
+  }
 }
 ```
 
@@ -87,13 +87,13 @@ Mbedを使う場合は、`mbed_app.json`に追加してください。
 
 ```json
 {
-    "config": {
-        "serialbridge_with_canfd": {
-            "help": "Macro",
-            "macro_name": "CANFD",
-            "value": 0
-        }
+  "config": {
+    "serialbridge_with_canfd": {
+      "help": "Macro",
+      "macro_name": "CANFD",
+      "value": 0
     }
+  }
 }
 ```
 
@@ -320,18 +320,15 @@ void loop(){
 
 ## Commit Prefix
 
-| Prefix   | 内容               |
-|----------|------------------|
-| [Add]    | ファイル追加 / 機能追加    |
-| [Delete] | ファイル削除 / 機能削除    |
-| [Update] | 機能修正 (バグ修正を除く)   |
-| [Fix]    | バグ修正             |
-| [HotFix] | クリティカルなバグ修正      |
-| [Clean]  | リファクタリング / コード整理 |
-| [Change] | 仕様変更             |
-| [Rename] | 名前変更             |
-| [Docs]   | ドキュメント(説明)系の編集   |
-| [Debug]  | デバッグコードに関する編集    |
+- **feat**: 新機能
+- **change**: 修正・削除
+- **fix**: バグフィックス
+- **docs**: ドキュメントに関する変更
+- **style**: フォーマット等の変更
+- **refactor**: リファクタに関する変更
+- **debug**: デバック用のコード
+- **test**: テストコードの追加・更新
+- **chore**: GitHub Actions等タスクに関する変更
 
 ## License
 
