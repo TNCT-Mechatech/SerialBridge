@@ -57,13 +57,45 @@ git clone https://github.com/TNCT-Mechatech/SerialBridge
 
 ### Mbed
 
-**[Online Compiler](https://ide.mbed.com/)での開発のみ動作確認されています**
-
 1. 任意のプロジェクトを作成します
 2. レポジトリをプログラムにクローンします
-   [任意のプロジェクトを右クリック] -> [ライブラリのインポート] -> [URLからインポート] ->
-   [Source URLに[レポジトリのURL](https://github.com/TNCT-Mechatech/SerialBridge/)を入力] -> [Import AsをLibrary] -> [Import]
-   ※必要に応じてリビジョンから任意のコミットをマージしてください
+   1. 任意のプロジェクトを右クリック
+   2. Add Mbed Library 
+   3. URLに[レポジトリのURL](https://github.com/TNCT-Mechatech/SerialBridge/)を入力し、Next
+   4. 特に理由がなければ、`main` を選ぶ
+3. `mbed_app.json`ファイルを作成し、以下の内容を入力
+
+```json
+{
+    "config": {
+        "serialbridge_for_mbed": {
+            "help": "Macro",
+            "macro_name": "MBED",
+            "value": 0
+        }
+    }
+}
+```
+
+## SerialBridge with CAN FD
+
+CAN FDを使う場合は、`CANFD`マクロを宣言してください。
+
+### Mbed
+
+Mbedを使う場合は、`mbed_app.json`に追加してください。
+
+```json
+{
+    "config": {
+        "serialbridge_with_canfd": {
+            "help": "Macro",
+            "macro_name": "CANFD",
+            "value": 0
+        }
+    }
+}
+```
 
 ## 使用方法
 
@@ -197,14 +229,14 @@ typedef sb::Message<vector3_t> Vector3;
 SerialBridge serial(...);
 
 //  Message
-Vector3 msg0;
+Vector3 msg;
 
 void main(){
-    serial.add_frame(0, &msg0);
+    serial.add_frame(0, &msg);
 }
 ```
 
-この場合はmsg0をid 0番と登録したことになります。
+この場合は`msg`をid 0番と登録したことになります。
 
 ### 通信してみる
 
@@ -224,14 +256,14 @@ void main(){
 SerialBridge serial(...);
 
 //  Message
-Vector3 msg0;   //  sender
+Vector3 msg;   //  sender
 
 void main(){
-    serial.add_frame(0, &msg0);
+    serial.add_frame(0, &msg);
 
-    msg0.data.x = 0.123;
-    msg0.data.y = 0.456;
-    msg0.data.z = 0.789;
+    msg.data.x = 0.123;
+    msg.data.y = 0.456;
+    msg.data.z = 0.789;
 }
 
 void loop(){
@@ -247,11 +279,13 @@ Messageの値には、Message.data.VARIABLE_NAME でアクセスできます
 
 関数
 
-- SerialBridge::update()  
-  受信したパケットをデコードします。read()関数を使用するたびに呼び出してください。
-- SerialBridge::read()  
-  メッセージを読み込みます。受信に成功すると0を返します。  
-  Vector3を受信してみましょう
+- SerialBridge::update()
+
+受信したパケットをデコードします。
+
+- Message::was_update()
+
+メッセージ内容が更新されたかどうかを確認できます。
 
 ```c++
 #include <SerialBridge.hpp>
@@ -261,18 +295,18 @@ Messageの値には、Message.data.VARIABLE_NAME でアクセスできます
 SerialBridge serial(...);
 
 //  Message
-Vector3 msg1;   //  listener
+Vector3 msg;   //  listener
 
 void main(){
-    serial.add_frame(0, &msg1);
+    serial.add_frame(0, &msg);
 }
 
 void loop(){
     //  update and read
     serial.update()
-    if (msg1.was_updated() == 0)
+    if (msg.was_updated())
     {
-        printf("%f %f %f \n\r", msg1.data.x, mag1.data.y, msg1.data.z);
+        printf("%f %f %f \n\r", msg.data.x, mag.data.y, msg.data.z);
     }
 }
 ```
