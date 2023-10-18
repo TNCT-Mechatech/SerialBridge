@@ -5,7 +5,7 @@
 * @date 2021/8/28
 */
 
-#if defined(__arm__) && defined(MBED_SB)
+#if defined(__arm__) && defined(MBED)
 
 #ifndef _MBED_HARDWARE_SERIAL_HPP_
 #define _MBED_HARDWARE_SERIAL_HPP_
