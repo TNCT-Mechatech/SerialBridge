@@ -79,7 +79,7 @@ git clone https://github.com/TNCT-Mechatech/SerialBridge
 
 ## SerialBridge with CAN FD
 
-CAN FDを使う場合は、`CANFD`マクロを宣言してください。
+CAN FDを使う場合は、`SB_CANFD`マクロを宣言してください。
 
 ### Mbed
 
@@ -90,7 +90,7 @@ Mbedを使う場合は、`mbed_app.json`に追加してください。
   "config": {
     "serialbridge_with_canfd": {
       "help": "Macro",
-      "macro_name": "CANFD",
+      "macro_name": "SB_CANFD",
       "value": 0
     }
   }
