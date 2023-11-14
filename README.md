@@ -336,5 +336,5 @@ Apache-2.0 License
 
 ## Developer
 
-- [TaiyouKomazawa](https://github.com/TaiyouKomazawa)(Outside Contributor)
+- [TaiyouKomazawa](https://github.com/TaiyouKomazawa)(Project Author)
 - [testusuke](https://github.com/testusuke)
