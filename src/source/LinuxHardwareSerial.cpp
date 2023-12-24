@@ -43,7 +43,7 @@ LinuxHardwareSerial::LinuxHardwareSerial(const char port[], speed_t baud_rate)
 {
     int fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
     if(fd < 0){
-        fprintf(stderr, "open port failed");
+        perror("Open port failed");
         exit(EXIT_FAILURE);
     }
     fcntl(fd, F_SETFL, FNDELAY);
