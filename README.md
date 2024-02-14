@@ -303,7 +303,7 @@ void main(){
 
 void loop(){
     //  update and read
-    serial.update()
+    serial.update();
     if (msg.was_updated())
     {
         printf("%f %f %f \n\r", msg.data.x, mag.data.y, msg.data.z);
