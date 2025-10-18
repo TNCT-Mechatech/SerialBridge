@@ -1,3 +1,7 @@
 [submodule "acan2517FD"]
 	path = acan2517FD
-	url = https://github.com/TNCT-Mechatech/acan2517FD
+	url = https://github.com/TNCT-Mechatech/acan2517FD.git
+
+[submodule "STM32BufferedSerial"]
+	path = STM32BufferedSerial
+	url = https://github.com/TNCT-Mechatech/STM32BufferedSerial.git
