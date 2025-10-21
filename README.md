@@ -52,7 +52,7 @@
 2. terminalで以下のコマンドを実行しレポジトリをクローンします
 
 ```
-git clone https://github.com/TNCT-Mechatech/SerialBridge
+git clone https://github.com/TNCT-Mechatech/SerialBridge.git
 ```
 
 ### Mbed
@@ -76,6 +76,22 @@ git clone https://github.com/TNCT-Mechatech/SerialBridge
   }
 }
 ```
+
+### STM32CubeIDE
+
+他のIDEやOSと比較して開発難度が高めです。
+
+1. 任意のプロジェクトを作成します。
+2. 任意のフォルダ(例: download)に移動し, 以下のコマンドをcmdで実行します。
+```
+git clone https://github.com/TNCT-Mechatech/SerialBridge.git
+```
+4. エクスプローラーを開いて2. で開いた任意のフォルダを開いてください。
+5. 生成されたSerialBridgeライブラリを1で作成したSTM32CubeIDEプロジェクトの`Driver`フォルダ以下に直接, または任意`Driver`以下のフォルダにドラッグ&ドロップします。
+6. cmdで5. でドラッグ&ドロップした先の`SerialBridge`フォルダを開き, `make all`をします。
+7. 最後に, コンパイルが通るように, プロジェクトを右クリック>propaties>C/C++ Ceneral>Pathys and Symbolsよりインクルードパスを設定して導入完了です。
+
+
 
 ## SerialBridge with CAN FD
 
@@ -176,6 +192,34 @@ SerialBridge serial(dev);
 
 SerialDev *dev = new MbedHardwareSerial(new BufferedSerial(USBTX, USBRX, 9600));
 SerialBridge serial(dev);
+```
+
+#### **STM32CubeIDE**
+
+プロジェクトルート直下の`.ioc`ファイルを開き, 上部のタブのClock Configurationからto USBの項目を48MHzになるように各項目を設定します。
+（to USBの項目を指定すれば勝手に整合性を保ちつつ他の項目を操作してくれる機能もあります。）
+これが終わったら `Ctrl+S`で保存したうえでGenarate Codeをしてください。
+```c++
+#include <SerialBridge.hpp>
+#include <STM32BufferedSerial.hpp>
+#include <STM32HardwareSerial.hpp>
+
+// ..
+// ..
+int main(void)
+{
+  // ..
+  // ..
+  MX_USART2_UART_Init();
+  // この下に配置↓
+  STM32BufferedSerial* buf = new STM32BufferedSerial(&huart2);
+  SerialDev *dev = new STM32HardwareSerial(buf);
+  SerialBridge serial(dev);
+  buf->begin();
+
+  while(1)
+  {
+    // ..
 ```
 
 ### Messaseの用意とフレームの追加
@@ -303,7 +347,7 @@ void main(){
 
 void loop(){
     //  update and read
-    serial.update()
+    serial.update();
     if (msg.was_updated())
     {
         printf("%f %f %f \n\r", msg.data.x, mag.data.y, msg.data.z);
@@ -317,6 +361,7 @@ void loop(){
 - C++11 (GNU GCC 10.3.0)
 - Arduino IDE 1.8.13
 - Mbed OS 6.13.0 based
+- STM32CubeIDE 1.19.0
 
 ## Commit Prefix
 
