@@ -7,7 +7,6 @@
 #ifndef _STM32_HARDWARE_SERIAL_HPP_
 #define _STM32_HARDWARE_SERIAL_HPP_
 
-#include "main.h"
 #include "SerialDev.hpp"
 #include "../STM32BufferedSerial/src/STM32BufferedSerial.hpp"
 #include <cstdint>
