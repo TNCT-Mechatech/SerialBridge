@@ -9,7 +9,7 @@
 
 #include "main.h"
 #include "SerialDev.hpp"
-#include "STM32BufferedSerial.hpp"
+#include "../STM32BufferedSerial/src/STM32BufferedSerial.hpp"
 #include <cstdint>
 
 //#define RX_BUFFER_SIZE 256
