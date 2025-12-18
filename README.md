@@ -15,7 +15,7 @@
     1. プロジェクトディレクトリに移動します
     2. terminalで以下のコマンドを実行しsubmoduleとしてクローンします
     ```shell
-    git submodule add https://github.com/TNCT-Mechatech/SerialBridge SerialBridge
+    git submodule add https://github.com/TNCT-Mechatech/SerialBridge.git SerialBridge
     echo 'commit'
     git add SerialBridge
     git commit -m 'Add SerialBridge as a module'
@@ -24,7 +24,7 @@
     1. プロジェクトディレクトリに移動します
     2. terminalで以下のコマンドを実行しレポジトリをクローンします
     ```
-    git clone https://github.com/TNCT-Mechatech/SerialBridge
+    git clone https://github.com/TNCT-Mechatech/SerialBridge.git
     ```
 * 最後にmake allをして静的ライブラリを生成して、リンクさせます
     1. SerialBridgeディレクトリに移動します
