@@ -1,4 +1,4 @@
-#if defined(__arm__) && defined(STM32)
+#if defined(__arm__) && defined(USE_HAL_DRIVER)
 
 #include "../STM32HardwareSerial.hpp"
 #include <cstring>

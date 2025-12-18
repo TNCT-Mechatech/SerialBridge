@@ -3,7 +3,7 @@
  * @brief STM32 HAL + DMA(IDLE割り込み)対応 シリアル通信クラス
  * @date 2025/10/10
  */
-#if defined(__arm__) && defined(STM32)
+#if defined(__arm__) && defined(USE_HAL_DRIVER)
 
 #ifndef _STM32_HARDWARE_SERIAL_HPP_
 #define _STM32_HARDWARE_SERIAL_HPP_
