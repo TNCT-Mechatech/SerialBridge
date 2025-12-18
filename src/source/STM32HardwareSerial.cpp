@@ -1,3 +1,5 @@
+#if defined(__arm__) && defined(STM32)
+
 #include "../STM32HardwareSerial.hpp"
 #include <cstring>
 
@@ -32,3 +34,5 @@ int STM32HardwareSerial::write(unsigned char *data, unsigned int len)
 {
     return _dev->write((uint8_t*)data, (uint16_t)len);
 }
+
+#endif //ifdef(__arm__)
