@@ -13,7 +13,7 @@
 * @param[in] buff_size Receive buffer size.(bytes)
 */
 SerialBridge::SerialBridge(SerialDev *dev, const unsigned int buff_size)
-        : _id_list(), _buff_size(buff_size) {
+        : _str{}, _id_list{}, _dev(nullptr), _buff_size(buff_size) {
     _dev = new CobsSerial(dev, _buff_size);
 }
 
